@@ -1,3 +1,5 @@
+package de.rwth.swc.group10;
+
 import static org.valid4j.Assertive.*;
 
 public class OOSCDate implements DateInterface {

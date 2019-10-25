@@ -1,3 +1,5 @@
+package de.rwth.swc.group10;
+
 public interface DateInterface {
     public static final int DATETYPE_YEAR = 0;
     public static final int DATETYPE_DAY = 2;
@@ -23,7 +25,7 @@ public interface DateInterface {
     public int daysBetween(DateInterface otherDate);
 
     public int timeBetween(int type, DateInterface otherDate);
-    
+
     public void syncWithUTCTimeserver();
 
     @Override
