@@ -2,6 +2,8 @@ package de.rwth.swc.group10;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -64,5 +66,21 @@ public class OOSCDateTest {
         assertEquals(11, _date.getYear());
         assertEquals(1, _date.getMonth());
         assertEquals(1, _date.getDay());
+    }
+    
+    @Test
+    public void syncWithUTCTimeserverTest() {
+    	_date.syncWithUTCTimeserver();
+    	
+    	ArrayList<Integer> xList = ((OOSCDate) _date).getCurrentTimeFromUTCTimeServer();
+        Integer yearOnline = xList.get(0);
+        Integer monthOnline = xList.get(1);
+        Integer dayOnline = xList.get(2);
+        
+        assertEquals(_date.getYear(), yearOnline);
+        assertEquals(_date.getMonth(), monthOnline);
+        assertEquals(_date.getDay(), dayOnline);
+        
+        System.out.println("Passed syncWithUTCTimeserverTest");
     }
 }

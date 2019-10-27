@@ -2,6 +2,18 @@ package de.rwth.swc.group10;
 
 import static org.valid4j.Assertive.*;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.*;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
 public class OOSCDate implements DateInterface {
 
     private int _year;
@@ -207,9 +219,61 @@ public class OOSCDate implements DateInterface {
     public void syncWithUTCTimeserver() {
         require(invariant(), "inv-v");
 
-        // TODO: Implementation
+        // TODO: implementation done, peer review
+        ArrayList<Integer> xList = getCurrentTimeFromUTCTimeServer();
+        Integer yearReceived = xList.get(0);
+        Integer monthReceived = xList.get(1);
+        Integer dayReceived = xList.get(2);
+        
+        setDate(yearReceived, monthReceived, dayReceived);
 
         ensure(invariant(), "The invariant is not valid!");
+    }
+    
+    public ArrayList<Integer> getCurrentTimeFromUTCTimeServer() {
+    	
+    	CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpGet request = new HttpGet("https://andthetimeis.com/utc/now");
+        CloseableHttpResponse response = null;
+        
+		try {
+			response = httpClient.execute(request);
+		} catch (ClientProtocolException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        HttpEntity entity = response.getEntity();
+        String result = null;
+        
+        if (entity != null) {
+			try {
+				result = EntityUtils.toString(entity);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            //System.out.println(result);
+        }
+        // result LIKE 2019-10-27 20:20:56 +00:00
+        ArrayList<Integer> allThreeParts = new ArrayList<Integer>();
+        String dateAllTogether = result.split(" ")[0]; //2019-10-27
+        String[] dateSplitted = dateAllTogether.split("-"); 
+        Integer year = Integer.valueOf(dateSplitted[0]);
+        Integer month = Integer.valueOf(dateSplitted[1]);
+        Integer day = Integer.valueOf(dateSplitted[2]);
+        allThreeParts.add(0, year);
+        allThreeParts.add(1, month);
+        allThreeParts.add(2, day);
+        
+		return allThreeParts;
+    	
     }
 
     @Override

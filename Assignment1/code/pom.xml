@@ -27,6 +27,14 @@
 			<version>${junit.jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- http -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.10</version>
+		</dependency>
+		
     </dependencies>
 
     <build>
