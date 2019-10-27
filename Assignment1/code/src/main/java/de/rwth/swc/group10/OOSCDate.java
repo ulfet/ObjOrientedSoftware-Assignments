@@ -8,14 +8,32 @@ public class OOSCDate implements DateInterface {
     private int _month;
     private int _day;
 
-    private static final int[] MAXIMUM = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    // TODO: Does not work for leap-years!
+    private static final int[] MAXIMUM = {
+        31,     // JAN
+        28,     // FEB
+        31,     // MAR
+        30,     // APR
+        31,     // MAY
+        30,     // JUN
+        31,     // JUL
+        31,     // AUG
+        30,     // SEP
+        31,     // OCT
+        30,     // NOV
+        31      // DEC
+    };
 
     public OOSCDate() {
-        // TODO: constructor
+        _year = 1;
+        _month = 1;
+        _day = 1;
+
+        ensure(invariant(), "The invariant is not valid!");
     }
 
     public void setDate(int year, int month, int day) {
-        // TODO: preconditions
+        require(invariant(), "inv-v");
 
         setYear(year);
         setMonth(month);
@@ -28,6 +46,7 @@ public class OOSCDate implements DateInterface {
     }
 
     public void setYear(int year) {
+        require(invariant(), "inv-v");
         require(year >= 0, "pre-v: The year (%o) must be positive", year);
 
         _year = year;
@@ -37,6 +56,7 @@ public class OOSCDate implements DateInterface {
     }
 
     public void setMonth(int month) {
+        require(invariant(), "inv-v");
         require(month >= 1, "pre-v: The month (%o) must be greater than 0", month);
         require(month <= 12, "pre-v: The month (%o) cannot be greater than 12", month);
 
@@ -47,6 +67,7 @@ public class OOSCDate implements DateInterface {
     }
 
     public void setDay(int day) {
+        require(invariant(), "inv-v");
         require(day >= 1, "pre-v: The day (%o) must be greater than 0", day);
         require(day <= MAXIMUM[getMonth() - 1], "pre-v: The day (%o) cannot be greater than (%o)", day, MAXIMUM[getMonth() - 1]);
 
@@ -79,12 +100,17 @@ public class OOSCDate implements DateInterface {
         require(daysToAdd > 0, "pre-v: The daysToAdd (%o) have to be positive", daysToAdd);
 
         if (getDay() + daysToAdd > MAXIMUM[getMonth() - 1]) {
-            daysToAdd -= getDay();
+            // substract all comming days of the current month + 1 for the switch to the next month
+            daysToAdd -= (MAXIMUM[getMonth() - 1] - getDay()) + 1;
             addMonths(1);
-            addDays(daysToAdd);
-        }
+            setDay(1);
 
-        setDay(getDay() + daysToAdd);
+            if (daysToAdd > 0) {
+                addDays(daysToAdd);
+            }
+        } else {
+            setDay(getDay() + daysToAdd);
+        }
 
         ensure(invariant(), "The invariant is not valid!");
     }
@@ -94,12 +120,17 @@ public class OOSCDate implements DateInterface {
         require(monthsToAdd > 0, "pre-v: The monthsToAdd (%o) have to be positive", monthsToAdd);
 
         if (getMonth() + monthsToAdd > 12) {
-            monthsToAdd -= getMonth();
+            // substract all comming month and one extra for the switch to the next year
+            monthsToAdd -= (12 - getMonth()) + 1;
             addYears(1);
-            addMonths(monthsToAdd);
-        }
+            setMonth(1);
 
-        setMonth(getMonth() + monthsToAdd);
+            if (monthsToAdd > 0) {
+                addMonths(monthsToAdd);
+            }
+        } else {
+            setMonth(getMonth() + monthsToAdd);
+        }
 
         ensure(invariant(), "The invariant is not valid!");
     }
@@ -115,24 +146,42 @@ public class OOSCDate implements DateInterface {
 
     public void removeDays(int daysToRemove) {
         require(invariant(), "inv-v");
+        require(daysToRemove > 0, "pre-v: The days to remove (%o) have to be positive", daysToRemove);
 
-        // TODO: Implementation
+        if (daysToRemove > getDay()) {
+            daysToRemove -= getDay();
+            removeMonths(1);
+            setDay(MAXIMUM[getMonth() - 1]);
+            removeDays(daysToRemove);
+        } else {
+            setDay(getDay() - daysToRemove);
+        }
 
         ensure(invariant(), "The invariant is not valid!");
     }
 
     public void removeMonths(int monthsToRemove) {
         require(invariant(), "inv-v");
+        require(monthsToRemove > 0, "pre-v: The month to remove (%o) have to be positive", monthsToRemove);
 
-        // TODO: Implementation
+        if (monthsToRemove > getMonth()) {
+            monthsToRemove -= getMonth();
+            removeYears(1);
+            setMonth(12);
+            removeMonths(monthsToRemove);
+        } else {
+            setMonth(getMonth() - monthsToRemove);
+        }
 
         ensure(invariant(), "The invariant is not valid!");
     }
 
     public void removeYears(int yearsToRemove) {
         require(invariant(), "inv-v");
+        require(yearsToRemove > 0, "pre-v: The years to remove (%o) have to be positive", yearsToRemove);
+        require(yearsToRemove <= getYear(), "pre-v: The years to remove (%o) have to be less or equal then the current year (%o)",yearsToRemove, getYear());
 
-        // TODO: Implementation
+        setYear(getYear() - yearsToRemove);
 
         ensure(invariant(), "The invariant is not valid!");
     }
@@ -142,6 +191,7 @@ public class OOSCDate implements DateInterface {
 
         // TODO: Implementation
 
+        ensure(invariant(), "The invariant is not valid!");
         return 0;
     }
 
@@ -150,11 +200,14 @@ public class OOSCDate implements DateInterface {
 
         // TODO: Implementation
 
+        ensure(invariant(), "The invariant is not valid!");
         return 0;
     }
 
     public void syncWithUTCTimeserver() {
         require(invariant(), "inv-v");
+
+        // TODO: Implementation
 
         ensure(invariant(), "The invariant is not valid!");
     }
@@ -169,7 +222,12 @@ public class OOSCDate implements DateInterface {
     }
 
     private Boolean invariant() {
-        // TODO: Have to be implemented
-        return false;
+        require(_year >= 0, "pre-v: The year have to be greater or equals 0");
+        require(_month > 0, "pre-v: The month have to be greater 0");
+        require(_month <= 12, "pre-v: The month must not be greater 12");
+        require(_day > 0, "pre-v: The day have to be greater 0");
+        require(_day <= MAXIMUM[_month -1], "pre-v: The day have to be less or equal %o", MAXIMUM[_month - 1]);
+
+        return true;
     }
 }
