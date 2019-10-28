@@ -36,6 +36,33 @@ public class OOSCDate implements DateInterface {
         31      // DEC
     };
 
+    private static int getMaximum(int year, int month)
+    {
+        if (month != 1)
+        {
+            return MAXIMUM[month];
+        }
+        else
+        {
+            if (isLeapYear(getYear()))
+            {
+                return MAXIMUM[1] + 1;
+            }
+            else
+            {
+                return MAXIMUM[1];
+            }
+        }
+    }
+
+    private static bool isLeapYear(int year)
+    {
+        if (year % 400) return false;
+        if (year % 100) return false;
+        if (year % 4) return true;
+        return false;
+    }
+
     public OOSCDate() {
         _year = 1;
         _month = 1;
@@ -81,7 +108,7 @@ public class OOSCDate implements DateInterface {
     public void setDay(int day) {
         require(invariant(), "inv-v");
         require(day >= 1, "pre-v: The day (%o) must be greater than 0", day);
-        require(day <= MAXIMUM[getMonth() - 1], "pre-v: The day (%o) cannot be greater than (%o)", day, MAXIMUM[getMonth() - 1]);
+        require(day <= getMaximum(getYear(), getMonth() - 1), "pre-v: The day (%o) cannot be greater than (%o)", day, getMaximum(getYear(), getMonth() - 1));
 
         _day = day;
 
@@ -111,9 +138,9 @@ public class OOSCDate implements DateInterface {
         require(invariant(), "inv-v");
         require(daysToAdd > 0, "pre-v: The daysToAdd (%o) have to be positive", daysToAdd);
 
-        if (getDay() + daysToAdd > MAXIMUM[getMonth() - 1]) {
-            // substract all comming days of the current month + 1 for the switch to the next month
-            daysToAdd -= (MAXIMUM[getMonth() - 1] - getDay()) + 1;
+        if (getDay() + daysToAdd > getMaximum(getYear(), getMonth() - 1)) {
+            // substract all coming days of the current month + 1 for the switch to the next month
+            daysToAdd -= (getMaximum(getYear(), getMonth() - 1) - getDay()) + 1;
             addMonths(1);
             setDay(1);
 
@@ -132,7 +159,7 @@ public class OOSCDate implements DateInterface {
         require(monthsToAdd > 0, "pre-v: The monthsToAdd (%o) have to be positive", monthsToAdd);
 
         if (getMonth() + monthsToAdd > 12) {
-            // substract all comming month and one extra for the switch to the next year
+            // substract all coming month and one extra for the switch to the next year
             monthsToAdd -= (12 - getMonth()) + 1;
             addYears(1);
             setMonth(1);
@@ -163,7 +190,7 @@ public class OOSCDate implements DateInterface {
         if (daysToRemove > getDay()) {
             daysToRemove -= getDay();
             removeMonths(1);
-            setDay(MAXIMUM[getMonth() - 1]);
+            setDay(getMaximum(getYear(), getMonth() - 1));
             removeDays(daysToRemove);
         } else {
             setDay(getDay() - daysToRemove);
@@ -201,19 +228,134 @@ public class OOSCDate implements DateInterface {
     public int daysBetween(DateInterface otherDate) {
         require(invariant(), "inv-v");
 
-        // TODO: Implementation
+        int result = timeBetween(DATETYPE_DAY, otherDate);
 
         ensure(invariant(), "The invariant is not valid!");
-        return 0;
+        return result;
     }
 
     public int timeBetween(int type, DateInterface otherDate) {
         require(invariant(), "inv-v");
 
-        // TODO: Implementation
+        int result = 0;
+
+        // Check for easy case
+        if (type == DATETYPE_YEAR)
+        {
+            result = abs(this.getYear() - otherDate.getYear());
+        }
+        else
+        {
+            DateInterface greater;
+            DateInterface smaller;
+
+            if (getYear() > otherDate.getYear())
+            {
+                greater = this;
+                smaller = otherDate;
+            }
+            else
+            {
+                if (getYear() == otherDate.getYear())
+                {
+                    if (getMonth() > otherDate.getMonth())
+                    {
+                        greater = this;
+                        smaller = otherDate;
+                    }
+                    else
+                    {
+                        if (getMonth() == otherDate.getMonth())
+                        {
+                            if (getDay() > otherDate.getDay()
+                            {
+                                greater = this;
+                                smaller = otherDate;
+                            }
+                            else
+                            {
+                                if (getDay() == otherDate.getDay())
+                                {
+                                    return 0;
+                                }
+                                else
+                                {
+                                    greater = otherDate;
+                                    smaller = this;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            greater = otherDate;
+                            smaller = this;
+                        }
+                    }
+                }
+                else
+                {
+                    greater = otherDate;
+                    smaller = this;
+                }
+            }
+
+            OOSCDate intermediate = new OOSCDate();
+            intermediate.setDate(getDay(), getMonth(), getYear());
+
+            if (greater.getYear() > intermediate.getYear())
+            {
+                if (type == DATETYPE_MONTH)
+                {
+                    result += (greater.getYear() - intermediate.getYear() - 1) * 12;
+                }
+                else
+                {
+                    // Day
+                    for (int i = intermediate.getYear(); i < greater.getYear() - 1; i++)
+                    {
+                        if (isLeapYear(i))
+                        {
+                            result += 367;
+                        }
+                        else
+                        {
+                            result += 365;
+                        }
+                    }
+                }
+
+                intermediate.setMonth(1);
+            }
+
+            if (greater.getMonth() > intermediate.getMonth())
+            {
+                if (type == DATETYPE_MONTH)
+                {
+                    result += greater.getMonth() - 1;
+                }
+                else
+                {
+                    // Day
+                    for (int i = intermediate.getMonth(); i < greater.getMonth() - 1; i++)
+                    {
+                        result += getMaximum(intermediate.getYear(), i);
+                    }
+                }
+
+                intermediate.setDay(1);
+            }
+
+            if (greater.getDay() > intermediate.getDay())
+            {
+                if (type == DATETYPE_DAY)
+                {
+                    result += greater.getDay() - 1;
+                }
+            }
+        }
 
         ensure(invariant(), "The invariant is not valid!");
-        return 0;
+        return result;
     }
 
     public void syncWithUTCTimeserver() {
@@ -280,8 +422,11 @@ public class OOSCDate implements DateInterface {
     public String toString() {
         require(invariant(), "inv-v");
 
-        // TODO: Implementation
+        String result = getDay() + "." + getMonth() + "." + getYear();
 
+        ensure(result != NULL, "Post-v: Result is null");
+        ensure(result.length == 0, "Post-v: Result is empty");
+        ensure(invariant(), "The invariant is not valid!");
         return super.toString();
     }
 
