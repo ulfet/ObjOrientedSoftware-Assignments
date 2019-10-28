@@ -67,20 +67,28 @@ public class OOSCDateTest {
         assertEquals(1, _date.getMonth());
         assertEquals(1, _date.getDay());
     }
-    
+
     @Test
     public void syncWithUTCTimeserverTest() {
-    	_date.syncWithUTCTimeserver();
-    	
-    	ArrayList<Integer> xList = ((OOSCDate) _date).getCurrentTimeFromUTCTimeServer();
+        _date.syncWithUTCTimeserver();
+
+        ArrayList<Integer> xList = ((OOSCDate) _date).getCurrentTimeFromUTCTimeServer();
         Integer yearOnline = xList.get(0);
         Integer monthOnline = xList.get(1);
         Integer dayOnline = xList.get(2);
-        
+
         assertEquals(_date.getYear(), yearOnline);
         assertEquals(_date.getMonth(), monthOnline);
         assertEquals(_date.getDay(), dayOnline);
-        
+
         System.out.println("Passed syncWithUTCTimeserverTest");
+    }
+
+    @Test
+    public void DateToString() {
+        assertEquals("0001-01-01", _date.toString());
+
+        _date.setDate(2019, 10, 28);
+        assertEquals("2019-10-28", _date.toString());
     }
 }

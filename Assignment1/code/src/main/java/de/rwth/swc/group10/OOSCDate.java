@@ -287,9 +287,7 @@ public class OOSCDate implements DateInterface {
     public String toString() {
         require(invariant(), "inv-v");
 
-        // TODO: Implementation
-
-        return super.toString();
+        return String.format("%04d-%02d-%02d", getYear(), getMonth(), getDay());
     }
 
     private Boolean invariant() {
