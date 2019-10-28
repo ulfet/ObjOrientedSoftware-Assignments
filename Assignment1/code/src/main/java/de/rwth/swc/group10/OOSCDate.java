@@ -234,7 +234,7 @@ public class OOSCDate implements DateInterface {
         ensure(invariant(), "The invariant is not valid!");
     }
 
-    public ArrayList<Integer> getCurrentTimeFromUTCTimeServer() {
+    ArrayList<Integer> getCurrentTimeFromUTCTimeServer() {
         require(invariant(), "inv-v");
 
         ArrayList<Integer> parts = new ArrayList<>();
