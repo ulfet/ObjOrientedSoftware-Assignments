@@ -67,32 +67,45 @@ public class OOSCDateTest {
         assertEquals(1, _date.getMonth());
         assertEquals(1, _date.getDay());
     }
-    
+
     @Test
     public void timeBetweenTest()
     {
-    	DateInterface otherDate = new OOSCDate();
-    	_date.setDate(2019, 10, 29);
-    	otherDate.setDate(1997, 6, 25);
-    	
-    	// Expected values from WolframAlpha
-    	assertEquals(8161, otherDate.daysBetween(_date));
-    	assertEquals(268, otherDate.timeBetween(1, _date));
+        DateInterface otherDate = new OOSCDate();
+        _date.setDate(2019, 10, 29);
+
+        otherDate.setDate(2019, 10, 30);
+        assertEquals(1, _date.daysBetween(otherDate));
+
+        otherDate.setDate(2019, 10, 28);
+        assertEquals(1, _date.daysBetween(otherDate));
+        assertEquals(0, _date.timeBetween(DateInterface.DATETYPE_MONTH, otherDate));
+        assertEquals(0, _date.timeBetween(DateInterface.DATETYPE_YEAR, otherDate));
+
+        otherDate.setDate(2018, 10, 28);
+        assertEquals(366, _date.daysBetween(otherDate));
+        assertEquals(1, _date.timeBetween(DateInterface.DATETYPE_YEAR, otherDate));
+
+        // Expected values from WolframAlpha
+        otherDate.setDate(1997, 6, 25);
+        assertEquals(8161, otherDate.daysBetween(_date));
+        assertEquals(268, otherDate.timeBetween(DateInterface.DATETYPE_MONTH, _date));
+        assertEquals(22, _date.timeBetween(DateInterface.DATETYPE_YEAR, otherDate));
     }
-    
+
     @Test
     public void syncWithUTCTimeserverTest() {
-    	_date.syncWithUTCTimeserver();
-    	
-    	ArrayList<Integer> xList = ((OOSCDate) _date).getCurrentTimeFromUTCTimeServer();
+        _date.syncWithUTCTimeserver();
+
+        ArrayList<Integer> xList = ((OOSCDate) _date).getCurrentTimeFromUTCTimeServer();
         Integer yearOnline = xList.get(0);
         Integer monthOnline = xList.get(1);
         Integer dayOnline = xList.get(2);
-        
+
         assertEquals(_date.getYear(), yearOnline);
         assertEquals(_date.getMonth(), monthOnline);
         assertEquals(_date.getDay(), dayOnline);
-        
+
         System.out.println("Passed syncWithUTCTimeserverTest");
     }
 }

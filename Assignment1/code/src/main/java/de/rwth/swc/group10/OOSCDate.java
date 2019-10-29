@@ -5,20 +5,11 @@ import static org.valid4j.Assertive.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.apache.http.*;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.io.*;
@@ -27,7 +18,6 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLPeerUnverifiedException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -55,18 +45,14 @@ public class OOSCDate implements DateInterface {
 
     private static int getMaximum(int year, int month)
     {
-        if (month != 1)
-        {
+        if (month != 2) {
+            // Not february
             return MAXIMUM[month - 1];
-        }
-        else
-        {
-            if (isLeapYear(year))
-            {
+        } else {
+            // In leap years the maximum is 29
+            if (isLeapYear(year)) {
                 return MAXIMUM[1] + 1;
-            }
-            else
-            {
+            } else {
                 return MAXIMUM[1];
             }
         }
@@ -74,9 +60,18 @@ public class OOSCDate implements DateInterface {
 
     private static boolean isLeapYear(int year)
     {
-        if (year % 400 == 0) return false;
-        if (year % 100 == 0) return false;
-        if (year % 4 == 0) return true;
+        if (year % 400 == 0) {
+            return true;
+        }
+
+        if (year % 100 == 0) {
+            return false;
+        }
+
+        if (year % 4 == 0) {
+            return true;
+        }
+
         return false;
     }
 
@@ -158,6 +153,7 @@ public class OOSCDate implements DateInterface {
         if (getDay() + daysToAdd > getMaximum(getYear(), getMonth())) {
             // substract all coming days of the current month + 1 for the switch to the next month
             daysToAdd -= (getMaximum(getYear(), getMonth()) - getDay()) + 1;
+
             setDay(1);
             addMonths(1);
 
@@ -257,25 +253,20 @@ public class OOSCDate implements DateInterface {
 
         int result = 0;
 
-        if (type == DATETYPE_YEAR)
-        {
+        if (type == DATETYPE_YEAR) {
             // Easiest case doesn't include any counting
             result = Math.abs(this.getYear() - otherDate.getYear());
-        }
-        else
-        {
+        } else {
             DateInterface greater;
             DateInterface smaller;
 
-            if (getYear() > otherDate.getYear()
-                || (getYear() == otherDate.getYear() && getMonth() > otherDate.getMonth()
-                    || (getMonth() == otherDate.getMonth() && getDay() > otherDate.getDay())))
-            {
+            if (getYear() > otherDate.getYear() ||
+                (getYear() == otherDate.getYear() &&
+                    (getMonth() > otherDate.getMonth() ||
+                    (getMonth() == otherDate.getMonth() && getDay() > otherDate.getDay())))) {
                 greater = this;
                 smaller = otherDate;
-            }
-            else
-            {
+            } else {
                 greater = otherDate;
                 smaller = this;
             }
@@ -283,26 +274,19 @@ public class OOSCDate implements DateInterface {
             OOSCDate intermediate = new OOSCDate();
             intermediate.setDate(smaller.getYear(), smaller.getMonth(), smaller.getDay());
 
-            while (intermediate.getYear() != greater.getDay()
-            	|| intermediate.getMonth() != greater.getMonth()
-            	|| intermediate.getDay() != intermediate.getDay())
-			{
-				intermediate.addDays(1);
-				if (type == DATETYPE_DAY)
-				{
-					result++;
-				}
-				else
-				{
-					// Count months
-					if (intermediate.getDay() == 1)
-					{
-						result++;
-					}
-				}
-			}
+            while (!(intermediate.getYear() == greater.getYear() &&
+                     intermediate.getMonth() == greater.getMonth() &&
+                     (type == DATETYPE_MONTH || intermediate.getDay() == greater.getDay()))) {
+                if (type == DATETYPE_DAY) {
+                    intermediate.addDays(1);
+                    result++;
+                } else {
+                    intermediate.addMonths(1);
+                    result++;
+                }
+            }
         }
-        
+
         ensure(invariant(), "The invariant is not valid!");
         return result;
     }
@@ -312,72 +296,72 @@ public class OOSCDate implements DateInterface {
 
         // TODO: implementation done, peer review
         ArrayList<Integer> xList = getCurrentTimeFromUTCTimeServer();
-        
+
         if (xList == null)
         {
-        	return;
+            return;
         }
-        
+
         Integer yearReceived = xList.get(0);
         Integer monthReceived = xList.get(1);
         Integer dayReceived = xList.get(2);
-        
+
         setDate(yearReceived, monthReceived, dayReceived);
 
         ensure(invariant(), "The invariant is not valid!");
     }
-    
+
     public ArrayList<Integer> getCurrentTimeFromUTCTimeServer() {
-    	
-    	URL url;
-    	String result = "";
+
+        URL url;
+        String result = "";
         try
         {
-        	SSLContext ctx = SSLContext.getInstance("TLS");
+            SSLContext ctx = SSLContext.getInstance("TLS");
             ctx.init(new KeyManager[0], new TrustManager[] {new DefaultTrustManager()}, new SecureRandom());
             SSLContext.setDefault(ctx);
-        	url = new URL("https://andthetimeis.com/utc/now");
-        	HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
-        	conn.setHostnameVerifier(new HostnameVerifier() {
+            url = new URL("https://andthetimeis.com/utc/now");
+            HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+            conn.setHostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String arg0, SSLSession arg1) {
                     return true;
                 }
             });
-        	BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        	result = br.readLine();
-        	br.close();
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            result = br.readLine();
+            br.close();
         }
         catch (MalformedURLException e)
         {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
         catch (IOException e)
         {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
         catch (NoSuchAlgorithmException e)
         {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
         catch (KeyManagementException e)
         {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
 
         // result LIKE 2019-10-27 20:20:56 +00:00
         ArrayList<Integer> allThreeParts = new ArrayList<Integer>();
         String dateAllTogether = result.split(" ")[0]; //2019-10-27
-        String[] dateSplitted = dateAllTogether.split("-"); 
+        String[] dateSplitted = dateAllTogether.split("-");
         Integer year = Integer.valueOf(dateSplitted[0]);
         Integer month = Integer.valueOf(dateSplitted[1]);
         Integer day = Integer.valueOf(dateSplitted[2]);
         allThreeParts.add(0, year);
         allThreeParts.add(1, month);
         allThreeParts.add(2, day);
-        
-		return allThreeParts;
-    	
+
+        return allThreeParts;
+
     }
 
     @Override
@@ -401,7 +385,7 @@ public class OOSCDate implements DateInterface {
 
         return true;
     }
-    
+
     private static class DefaultTrustManager implements X509TrustManager {
 
         @Override
