@@ -1,0 +1,116 @@
+\documentclass[a4paper,12pt,oneside]{scrreprt}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ae,aecompl}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{ulem}
+\usepackage{cancel}
+\usepackage{float}
+\usepackage{color}
+\usepackage{titlesec}
+\usepackage{geometry}
+\geometry{verbose,a4paper,tmargin=25mm,bmargin=25mm,lmargin=15mm,rmargin=25mm}
+\titlelabel{\thetitle.\quad}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{paralist}
+\usepackage{textcomp}
+
+\renewcommand{\rmdefault}{phv}
+\renewcommand{\sfdefault}{phv}
+
+% our OWN imports for our use
+\usepackage{listings}
+\lstdefinestyle{ourJavaStyle}{
+	language=Java,
+	%numbers=left,
+	%numbersep=8pt,
+	stepnumber=1,
+	tabsize=2,
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\ttfamily\scriptsize,
+	keywordstyle=\color{blue}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{green}\ttfamily,
+	breaklines=true
+}
+
+\newcommand*{\sourcepath}{../code/src/main/java/de/rwth/swc/group10}
+\newcommand*{\testpath}{../code/src/test/java/de/rwth/swc/group10}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\titleformat{\subsection}
+{\normalfont\fontfamily{phv}\fontsize{14}{17}\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+	
+\begin{tabular}{ccc}
+	\begin{large} \textbf{Prof. Lichter} \end{large} &
+	
+	\begin{minipage}[H]{3.5cm}
+	\centering
+		\begin{large} OOSC \end{large} \\
+		\begin{large} WS 2016/2017 \end{large}
+	\end{minipage} &
+	
+	\begin{minipage}[H]{4cm}
+		\includegraphics[keepaspectratio,width=\textwidth,angle=0]{images/swc.png}
+	\end{minipage} \\
+Andreas Steffens, Konrad F\"ogen &  &  \\
+& \begin{huge} \textbf{Submission 1} \end{huge}&  \\
+& oosc@swc.rwth-aachen.de &  \\
+& & \\
+ % Hier drunter müssen die Daten noch angepasst werden
+Issued: 1.1.2016 &
+Submission: 1.1.2016 &
+Discussion: 1.1.2016 \\
+\end{tabular}
+\newline \newline \newline
+\centering
+Submitted by Group 10
+
+\begin{tabular}{ll}
+	% TODO: enter your matriculation number accordingly
+	Dominik Bittner, & \\
+	Ulfet Cetin, & 391819\\
+ 	Philipp Hochmann,\\
+ 	Anar Orujov,\\
+ 	Ada Slupczynski, \\
+ 	(sorted on lastname basis)
+\end{tabular}
+
+\setcounter{chapter}{1} % Aktuelles Assigment
+\section{Assignment: Reuse}
+
+%\lstinputlisting[style=ourJavaStyle]{\sourcepath /DateInterface.java}
+
+
+
+\section{Assignment: Design by Contract}
+
+
+\begin{enumerate}[a)]
+	\item Assume you are given the following interface for a new enhanced Date
+	implementation. Please provide an implementation with Design by Contract in Java 	using Assertions or Valid4J (http://www.valid4j.org/).\\
+	
+	\vspace{2em}
+	
+	% \lstinputlisting[style=ourJavaStyle]{\sourcepath /OOSCDate.java}
+	
+	\item Make a robust implementation by using Defensive Programming.
+	
+	\item  Write a set of JUnit tests to check the functionality and show how DbC and Defensive Programming works in your case.
+	
+	\item Explain the use of Design by Contract and Defensive Programming in your
+	implementation. Are there commonalities or conflicts?
+\end{enumerate}
+
+\section{Assignment: Design by Contract with Inheritance}
+\end{document}
