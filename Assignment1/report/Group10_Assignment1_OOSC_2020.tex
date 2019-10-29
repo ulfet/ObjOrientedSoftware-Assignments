@@ -21,6 +21,7 @@
 \usepackage{booktabs}
 \usepackage{paralist}
 \usepackage{textcomp}
+\usepackage[official]{eurosym}
 
 \renewcommand{\rmdefault}{phv}
 \renewcommand{\sfdefault}{phv}
@@ -78,7 +79,7 @@ Submitted by Group 10
 
 \begin{tabular}{ll}
 	% TODO: enter your matriculation number accordingly
-	Dominik Bittner, & \\
+	Dominik Bittner, & 369202 \\
 	Ulfet Cetin, & 391819\\
  	Philipp Hochmann,\\
  	Anar Orujov,\\
@@ -89,7 +90,87 @@ Submitted by Group 10
 \setcounter{chapter}{1} % Aktuelles Assigment
 \section{Assignment: Reuse}
 
-%\lstinputlisting[style=ourJavaStyle]{\sourcepath /DateInterface.java}
+% TODO: Assumptions
+
+"`[..] when re-using components, you reduce your effort by 80\% as in
+the case where you would re-implement from scratch [...]"' $\rightarrow$ reuse a component for 20\% of the development costs $\rightarrow$ RCR=0,2
+
+\begin{table}[h]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|l|r|}
+			\hline
+			Relative Cost for Reuse (RCR) & 0,2      \\ \hline
+			Relative Code of Writing for Resue (RCWR) & 1,7      \\ \hline
+			ErrorRate       & 1,2/KLOC \\ \hline
+			CostPerError    & 15.000\euro  \\ \hline
+			CostForNewCode  & 100\euro/LOC \\ \hline
+			NewCodeForReuse & 4 KLOC   \\ \hline
+		\end{tabular}%
+	}
+\end{table}
+
+\begin{equation*}
+	ROI = \sum_i(RCA_i) - ADC = (RCA_L + RCA_D + RCA_I + RCA_A) - ADC
+\end{equation*}
+\begin{equation*}
+	DCA_i = \text{Percent of usage} * 50 \text{ KLOC} * (1 - RCR) * 100 \text{ \euro/LOC}
+\end{equation*}
+\begin{equation*}
+	MCA_i = \text{Percent of usage} * 50 \text{ KLOC} * 1,2/\text{KLOC} * 15000\text{\euro}
+\end{equation*}
+
+\begin{equation*}
+	DCA_L = 30\% * 50 \text{ KLOC} * 0,8 * 100\text{ \euro/LOC} = 1200000 \text{\euro}
+\end{equation*}
+\begin{equation*}
+	MCA_L = 30\% * 50 \text{ KLOC} * 1,2/\text{KLOC} * 15000\text{\euro} = 270000\text{\euro}
+\end{equation*}
+\begin{equation*}
+	RCA_L = DCA_L + MCA_L = 1200000\text{\euro} + 270000\text{\euro} = 1470000\text{\euro}
+\end{equation*}
+
+\begin{equation*}
+	DCA_D = 50\% * 50 \text{ KLOC} * 0,8 * 100\text{ \euro/LOC} = 2000000 \text{\euro}
+\end{equation*}
+\begin{equation*}
+	MCA_D = 50\% * 50 \text{ KLOC} * 1,2/\text{KLOC} * 15000\text{\euro} = 450000\text{\euro}
+\end{equation*}
+\begin{equation*}
+	RCA_D = DCA_D + MCA_D = 2000000\text{\euro} + 450000\text{\euro} = 2450000\text{\euro}
+\end{equation*}
+
+\begin{equation*}
+	DCA_I = 20\% * 50 \text{ KLOC} * 0,8 * 100\text{ \euro/LOC} = 800000 \text{\euro}
+\end{equation*}
+\begin{equation*}
+	MCA_I = 20\% * 50 \text{ KLOC} * 1,2/\text{KLOC} * 15000\text{\euro} = 180000\text{\euro}
+\end{equation*}
+\begin{equation*}
+	RCA_I = DCA_I + MCA_I = 800000\text{\euro} + 180000\text{\euro} = 980000\text{\euro}
+\end{equation*}
+
+\begin{equation*}
+	DCA_A = 10\% * 50 \text{ KLOC} * 0,8 * 100\text{ \euro/LOC} = 400000 \text{\euro}
+\end{equation*}
+\begin{equation*}
+	MCA_A = 10\% * 50 \text{ KLOC} * 1,2/\text{KLOC} * 15000\text{\euro} = 90000\text{\euro}
+\end{equation*}
+\begin{equation*}
+	RCA_A = DCA_A + MCA_A = 400000\text{\euro} + 90000\text{\euro} = 490000\text{\euro}
+\end{equation*}
+
+\begin{equation*}
+	ADC =  (1,7 - 1) * 4\text{ KLOC} * 100 \text{\euro/LOC} = 280000\text{\euro}
+\end{equation*}
+\begin{equation*}
+	ROI = (1470000\text{\euro} + 2450000\text{\euro} + 980000\text{\euro} + 490000\text{\euro}) - 280000\text{\euro} = 5110000\text{\euro}
+\end{equation*}
+
+Due to this result I would make a clear reuse decision because it will bring much profit.
+
+
+
 
 
 
@@ -100,8 +181,9 @@ Submitted by Group 10
 	\item Assume you are given the following interface for a new enhanced Date
 	implementation. Please provide an implementation with Design by Contract in Java 	using Assertions or Valid4J (http://www.valid4j.org/).\\
 	
-	\vspace{2em}
-	
+%	\vspace{2em}
+% enable those commented out parts to have the code included in the pdf
+	% \lstinputlisting[style=ourJavaStyle]{\sourcepath /DateInterface.java}
 	% \lstinputlisting[style=ourJavaStyle]{\sourcepath /OOSCDate.java}
 	
 	\item Make a robust implementation by using Defensive Programming.
