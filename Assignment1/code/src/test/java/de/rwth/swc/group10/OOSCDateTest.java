@@ -69,6 +69,31 @@ public class OOSCDateTest {
     }
 
     @Test
+    public void timeBetweenTest()
+    {
+        DateInterface otherDate = new OOSCDate();
+        _date.setDate(2019, 10, 29);
+
+        otherDate.setDate(2019, 10, 30);
+        assertEquals(1, _date.daysBetween(otherDate));
+
+        otherDate.setDate(2019, 10, 28);
+        assertEquals(1, _date.daysBetween(otherDate));
+        assertEquals(0, _date.timeBetween(DateInterface.DATETYPE_MONTH, otherDate));
+        assertEquals(0, _date.timeBetween(DateInterface.DATETYPE_YEAR, otherDate));
+
+        otherDate.setDate(2018, 10, 28);
+        assertEquals(366, _date.daysBetween(otherDate));
+        assertEquals(1, _date.timeBetween(DateInterface.DATETYPE_YEAR, otherDate));
+
+        // Expected values from WolframAlpha
+        otherDate.setDate(1997, 6, 25);
+        assertEquals(8161, otherDate.daysBetween(_date));
+        assertEquals(268, otherDate.timeBetween(DateInterface.DATETYPE_MONTH, _date));
+        assertEquals(22, _date.timeBetween(DateInterface.DATETYPE_YEAR, otherDate));
+    }
+
+    @Test
     public void syncWithUTCTimeserverTest() {
         _date.syncWithUTCTimeserver();
 
@@ -86,10 +111,10 @@ public class OOSCDateTest {
 
     @Test
     public void DateToString() {
-        assertEquals("0001-01-01", _date.toString());
+        assertEquals("01.01.0001", _date.toString());
 
         _date.setDate(2019, 10, 28);
-        assertEquals("2019-10-28", _date.toString());
+        assertEquals("28.10.2019", _date.toString());
     }
     
     @Test
