@@ -91,4 +91,15 @@ public class OOSCDateTest {
         _date.setDate(2019, 10, 28);
         assertEquals("2019-10-28", _date.toString());
     }
+    
+    @Test
+    public void daysBetweenTest() {
+    	_date.setDate(2019, 1, 1);
+    	DateInterface otherDate = new OOSCDate();
+    	otherDate.setDate(2018, 1, 1);
+    	
+    	int diff = _date.daysBetween(otherDate);
+    	assertEquals(diff, 365);
+    	System.out.println("Paased daysBetweenTest");
+    }
 }

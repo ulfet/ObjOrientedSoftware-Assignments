@@ -199,19 +199,55 @@ public class OOSCDate implements DateInterface {
         ensure(invariant(), "The invariant is not valid!");
     }
 
+	int daysSinceChrist() {
+		int daysAccumulated = 0;
+
+		// distinction between years made up of 366 days
+		// not including the current year (i < currentYear)
+		int currentYear = this.getYear();
+		for (int i=0; i < currentYear; i++) {
+			if ((i % 4) == 0) {
+				daysAccumulated += 366;
+			}
+			else
+				daysAccumulated += 365;
+		}
+
+		// month days are accumulated
+		//		with respect to extra years
+		int currentMonth = this.getMonth();
+		for (int i=1; i < currentMonth; i++) {
+			daysAccumulated += MAXIMUM[i-1];
+
+			// check for extra year && february
+			if ((i == 2) && (currentYear % 4 == 0)) {
+				daysAccumulated += 1;
+			}
+		}
+
+		daysAccumulated += this.getDay();
+
+		return daysAccumulated;
+	}
+
+
     public int daysBetween(DateInterface otherDate) {
         require(invariant(), "inv-v");
 
-        // TODO: Implementation
+        // TODO: peer-review
+        
+        int thisInstanceDays = this.daysSinceChrist();
+        int inputInstanceDays = ((OOSCDate) otherDate).daysSinceChrist();
+        int difference = thisInstanceDays - inputInstanceDays;
 
         ensure(invariant(), "The invariant is not valid!");
-        return 0;
+        return difference;
     }
 
     public int timeBetween(int type, DateInterface otherDate) {
         require(invariant(), "inv-v");
 
-        // TODO: Implementation
+        // TODO: 
 
         ensure(invariant(), "The invariant is not valid!");
         return 0;
