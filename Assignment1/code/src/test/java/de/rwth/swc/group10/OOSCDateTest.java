@@ -108,4 +108,12 @@ public class OOSCDateTest {
 
         System.out.println("Passed syncWithUTCTimeserverTest");
     }
+
+    @Test
+    public void DateToString() {
+        assertEquals("01.01.0001", _date.toString());
+
+        _date.setDate(2019, 10, 28);
+        assertEquals("28.10.2019", _date.toString());
+    }
 }

@@ -5,28 +5,22 @@ import static org.valid4j.Assertive.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.io.*;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import org.apache.http.*;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 public class OOSCDate implements DateInterface {
 
     private int _year;
     private int _month;
     private int _day;
+
+    private static final String TIMESERVER_URL = "https://andthetimeis.com/utc/now";
 
     private static final int[] MAXIMUM = {
         31,     // JAN
@@ -294,86 +288,80 @@ public class OOSCDate implements DateInterface {
     public void syncWithUTCTimeserver() {
         require(invariant(), "inv-v");
 
-        // TODO: implementation done, peer review
-        ArrayList<Integer> xList = getCurrentTimeFromUTCTimeServer();
+        ArrayList<Integer> parts = getCurrentTimeFromUTCTimeServer();
 
-        if (xList == null)
-        {
-            return;
+        // Only set new date, if there is a valid result
+        if (parts.size() == 3) {
+            Integer yearReceived = parts.get(0);
+            Integer monthReceived = parts.get(1);
+            Integer dayReceived = parts.get(2);
+
+            setDate(yearReceived, monthReceived, dayReceived);
         }
-
-        Integer yearReceived = xList.get(0);
-        Integer monthReceived = xList.get(1);
-        Integer dayReceived = xList.get(2);
-
-        setDate(yearReceived, monthReceived, dayReceived);
 
         ensure(invariant(), "The invariant is not valid!");
     }
 
-    public ArrayList<Integer> getCurrentTimeFromUTCTimeServer() {
+    ArrayList<Integer> getCurrentTimeFromUTCTimeServer() {
+        require(invariant(), "inv-v");
 
-        URL url;
-        String result = "";
-        try
-        {
-            SSLContext ctx = SSLContext.getInstance("TLS");
-            ctx.init(new KeyManager[0], new TrustManager[] {new DefaultTrustManager()}, new SecureRandom());
-            SSLContext.setDefault(ctx);
-            url = new URL("https://andthetimeis.com/utc/now");
-            HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
-            conn.setHostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String arg0, SSLSession arg1) {
-                    return true;
-                }
-            });
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            result = br.readLine();
-            br.close();
+        ArrayList<Integer> parts = new ArrayList<>();
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpGet request = new HttpGet(TIMESERVER_URL);
+        CloseableHttpResponse response = null;
+
+        try {
+            response = httpClient.execute(request);
+        } catch (ClientProtocolException e1) {
+            // In case of an exception just return an empty list
+            return parts;
+        } catch (IOException e1) {
+            // In case of an exception just return an empty list
+            return parts;
         }
-        catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            e.printStackTrace();
-        }
-        catch (KeyManagementException e)
-        {
-            e.printStackTrace();
+
+        HttpEntity entity = response.getEntity();
+        String result = null;
+
+        if (entity != null) {
+            try {
+                result = EntityUtils.toString(entity);
+            } catch (ParseException e) {
+                // In case of an exception just return an empty list
+                return parts;
+            } catch (IOException e) {
+                // In case of an exception just return an empty list
+                return parts;
+            }
         }
 
         // result LIKE 2019-10-27 20:20:56 +00:00
-        ArrayList<Integer> allThreeParts = new ArrayList<Integer>();
         String dateAllTogether = result.split(" ")[0]; //2019-10-27
         String[] dateSplitted = dateAllTogether.split("-");
+
         Integer year = Integer.valueOf(dateSplitted[0]);
         Integer month = Integer.valueOf(dateSplitted[1]);
         Integer day = Integer.valueOf(dateSplitted[2]);
-        allThreeParts.add(0, year);
-        allThreeParts.add(1, month);
-        allThreeParts.add(2, day);
 
-        return allThreeParts;
+        parts.add(0, year);
+        parts.add(1, month);
+        parts.add(2, day);
 
+        return parts;
     }
 
     @Override
     public String toString() {
         require(invariant(), "inv-v");
 
-        String result = getDay() + "." + getMonth() + "." + getYear();
+        String result = String.format("%02d.%02d.%04d", getDay(), getMonth(), getYear());
 
         ensure(result != null, "Post-v: Result is null");
-        ensure(result.length() == 0, "Post-v: Result is empty");
+        ensure(result.length() > 0, "Post-v: Result is empty");
         ensure(invariant(), "The invariant is not valid!");
-        return super.toString();
+
+        return result;
     }
 
     private Boolean invariant() {
@@ -384,19 +372,5 @@ public class OOSCDate implements DateInterface {
         require(_day <= getMaximum(_year, _month), "pre-v: The day has to be less or equal %d", getMaximum(_year, _month));
 
         return true;
-    }
-
-    private static class DefaultTrustManager implements X509TrustManager {
-
-        @Override
-        public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}
-
-        @Override
-        public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}
-
-        @Override
-        public X509Certificate[] getAcceptedIssuers() {
-            return null;
-        }
     }
 }
