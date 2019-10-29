@@ -69,6 +69,18 @@ public class OOSCDateTest {
     }
     
     @Test
+    public void timeBetweenTest()
+    {
+    	DateInterface otherDate = new OOSCDate();
+    	_date.setDate(2019, 10, 29);
+    	otherDate.setDate(1997, 6, 25);
+    	
+    	// Expected values from WolframAlpha
+    	assertEquals(8161, otherDate.daysBetween(_date));
+    	assertEquals(268, otherDate.timeBetween(1, _date));
+    }
+    
+    @Test
     public void syncWithUTCTimeserverTest() {
     	_date.syncWithUTCTimeserver();
     	

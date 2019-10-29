@@ -4,7 +4,6 @@ import static org.valid4j.Assertive.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
@@ -14,13 +13,31 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.io.*;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLPeerUnverifiedException;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 public class OOSCDate implements DateInterface {
 
     private int _year;
     private int _month;
     private int _day;
 
-    // TODO: Does not work for leap-years!
     private static final int[] MAXIMUM = {
         31,     // JAN
         28,     // FEB
@@ -40,11 +57,11 @@ public class OOSCDate implements DateInterface {
     {
         if (month != 1)
         {
-            return MAXIMUM[month];
+            return MAXIMUM[month - 1];
         }
         else
         {
-            if (isLeapYear(getYear()))
+            if (isLeapYear(year))
             {
                 return MAXIMUM[1] + 1;
             }
@@ -55,11 +72,11 @@ public class OOSCDate implements DateInterface {
         }
     }
 
-    private static bool isLeapYear(int year)
+    private static boolean isLeapYear(int year)
     {
-        if (year % 400) return false;
-        if (year % 100) return false;
-        if (year % 4) return true;
+        if (year % 400 == 0) return false;
+        if (year % 100 == 0) return false;
+        if (year % 4 == 0) return true;
         return false;
     }
 
@@ -108,7 +125,7 @@ public class OOSCDate implements DateInterface {
     public void setDay(int day) {
         require(invariant(), "inv-v");
         require(day >= 1, "pre-v: The day (%o) must be greater than 0", day);
-        require(day <= getMaximum(getYear(), getMonth() - 1), "pre-v: The day (%o) cannot be greater than (%o)", day, getMaximum(getYear(), getMonth() - 1));
+        require(day <= getMaximum(getYear(), getMonth()), "pre-v: The day (%d) cannot be greater than (%d)", day, getMaximum(getYear(), getMonth()));
 
         _day = day;
 
@@ -138,11 +155,11 @@ public class OOSCDate implements DateInterface {
         require(invariant(), "inv-v");
         require(daysToAdd > 0, "pre-v: The daysToAdd (%o) have to be positive", daysToAdd);
 
-        if (getDay() + daysToAdd > getMaximum(getYear(), getMonth() - 1)) {
+        if (getDay() + daysToAdd > getMaximum(getYear(), getMonth())) {
             // substract all coming days of the current month + 1 for the switch to the next month
-            daysToAdd -= (getMaximum(getYear(), getMonth() - 1) - getDay()) + 1;
-            addMonths(1);
+            daysToAdd -= (getMaximum(getYear(), getMonth()) - getDay()) + 1;
             setDay(1);
+            addMonths(1);
 
             if (daysToAdd > 0) {
                 addDays(daysToAdd);
@@ -161,8 +178,8 @@ public class OOSCDate implements DateInterface {
         if (getMonth() + monthsToAdd > 12) {
             // substract all coming month and one extra for the switch to the next year
             monthsToAdd -= (12 - getMonth()) + 1;
-            addYears(1);
             setMonth(1);
+            addYears(1);
 
             if (monthsToAdd > 0) {
                 addMonths(monthsToAdd);
@@ -190,7 +207,7 @@ public class OOSCDate implements DateInterface {
         if (daysToRemove > getDay()) {
             daysToRemove -= getDay();
             removeMonths(1);
-            setDay(getMaximum(getYear(), getMonth() - 1));
+            setDay(getMaximum(getYear(), getMonth()));
             removeDays(daysToRemove);
         } else {
             setDay(getDay() - daysToRemove);
@@ -236,124 +253,56 @@ public class OOSCDate implements DateInterface {
 
     public int timeBetween(int type, DateInterface otherDate) {
         require(invariant(), "inv-v");
+        require(otherDate != null, "pre-v: otherDate is NULL");
 
         int result = 0;
 
-        // Check for easy case
         if (type == DATETYPE_YEAR)
         {
-            result = abs(this.getYear() - otherDate.getYear());
+            // Easiest case doesn't include any counting
+            result = Math.abs(this.getYear() - otherDate.getYear());
         }
         else
         {
             DateInterface greater;
             DateInterface smaller;
 
-            if (getYear() > otherDate.getYear())
+            if (getYear() > otherDate.getYear()
+                || (getYear() == otherDate.getYear() && getMonth() > otherDate.getMonth()
+                    || (getMonth() == otherDate.getMonth() && getDay() > otherDate.getDay())))
             {
                 greater = this;
                 smaller = otherDate;
             }
             else
             {
-                if (getYear() == otherDate.getYear())
-                {
-                    if (getMonth() > otherDate.getMonth())
-                    {
-                        greater = this;
-                        smaller = otherDate;
-                    }
-                    else
-                    {
-                        if (getMonth() == otherDate.getMonth())
-                        {
-                            if (getDay() > otherDate.getDay()
-                            {
-                                greater = this;
-                                smaller = otherDate;
-                            }
-                            else
-                            {
-                                if (getDay() == otherDate.getDay())
-                                {
-                                    return 0;
-                                }
-                                else
-                                {
-                                    greater = otherDate;
-                                    smaller = this;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            greater = otherDate;
-                            smaller = this;
-                        }
-                    }
-                }
-                else
-                {
-                    greater = otherDate;
-                    smaller = this;
-                }
+                greater = otherDate;
+                smaller = this;
             }
 
             OOSCDate intermediate = new OOSCDate();
-            intermediate.setDate(getDay(), getMonth(), getYear());
+            intermediate.setDate(smaller.getYear(), smaller.getMonth(), smaller.getDay());
 
-            if (greater.getYear() > intermediate.getYear())
-            {
-                if (type == DATETYPE_MONTH)
-                {
-                    result += (greater.getYear() - intermediate.getYear() - 1) * 12;
-                }
-                else
-                {
-                    // Day
-                    for (int i = intermediate.getYear(); i < greater.getYear() - 1; i++)
-                    {
-                        if (isLeapYear(i))
-                        {
-                            result += 367;
-                        }
-                        else
-                        {
-                            result += 365;
-                        }
-                    }
-                }
-
-                intermediate.setMonth(1);
-            }
-
-            if (greater.getMonth() > intermediate.getMonth())
-            {
-                if (type == DATETYPE_MONTH)
-                {
-                    result += greater.getMonth() - 1;
-                }
-                else
-                {
-                    // Day
-                    for (int i = intermediate.getMonth(); i < greater.getMonth() - 1; i++)
-                    {
-                        result += getMaximum(intermediate.getYear(), i);
-                    }
-                }
-
-                intermediate.setDay(1);
-            }
-
-            if (greater.getDay() > intermediate.getDay())
-            {
-                if (type == DATETYPE_DAY)
-                {
-                    result += greater.getDay() - 1;
-                }
-            }
+            while (intermediate.getYear() != greater.getDay()
+            	|| intermediate.getMonth() != greater.getMonth()
+            	|| intermediate.getDay() != intermediate.getDay())
+			{
+				intermediate.addDays(1);
+				if (type == DATETYPE_DAY)
+				{
+					result++;
+				}
+				else
+				{
+					// Count months
+					if (intermediate.getDay() == 1)
+					{
+						result++;
+					}
+				}
+			}
         }
-
+        
         ensure(invariant(), "The invariant is not valid!");
         return result;
     }
@@ -363,6 +312,12 @@ public class OOSCDate implements DateInterface {
 
         // TODO: implementation done, peer review
         ArrayList<Integer> xList = getCurrentTimeFromUTCTimeServer();
+        
+        if (xList == null)
+        {
+        	return;
+        }
+        
         Integer yearReceived = xList.get(0);
         Integer monthReceived = xList.get(1);
         Integer dayReceived = xList.get(2);
@@ -374,35 +329,42 @@ public class OOSCDate implements DateInterface {
     
     public ArrayList<Integer> getCurrentTimeFromUTCTimeServer() {
     	
-    	CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpGet request = new HttpGet("https://andthetimeis.com/utc/now");
-        CloseableHttpResponse response = null;
-        
-		try {
-			response = httpClient.execute(request);
-		} catch (ClientProtocolException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-        
-        HttpEntity entity = response.getEntity();
-        String result = null;
-        
-        if (entity != null) {
-			try {
-				result = EntityUtils.toString(entity);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-            //System.out.println(result);
+    	URL url;
+    	String result = "";
+        try
+        {
+        	SSLContext ctx = SSLContext.getInstance("TLS");
+            ctx.init(new KeyManager[0], new TrustManager[] {new DefaultTrustManager()}, new SecureRandom());
+            SSLContext.setDefault(ctx);
+        	url = new URL("https://andthetimeis.com/utc/now");
+        	HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+        	conn.setHostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String arg0, SSLSession arg1) {
+                    return true;
+                }
+            });
+        	BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        	result = br.readLine();
+        	br.close();
         }
+        catch (MalformedURLException e)
+        {
+        	e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+        	e.printStackTrace();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+        	e.printStackTrace();
+        }
+        catch (KeyManagementException e)
+        {
+        	e.printStackTrace();
+        }
+
         // result LIKE 2019-10-27 20:20:56 +00:00
         ArrayList<Integer> allThreeParts = new ArrayList<Integer>();
         String dateAllTogether = result.split(" ")[0]; //2019-10-27
@@ -424,8 +386,8 @@ public class OOSCDate implements DateInterface {
 
         String result = getDay() + "." + getMonth() + "." + getYear();
 
-        ensure(result != NULL, "Post-v: Result is null");
-        ensure(result.length == 0, "Post-v: Result is empty");
+        ensure(result != null, "Post-v: Result is null");
+        ensure(result.length() == 0, "Post-v: Result is empty");
         ensure(invariant(), "The invariant is not valid!");
         return super.toString();
     }
@@ -435,8 +397,22 @@ public class OOSCDate implements DateInterface {
         require(_month > 0, "pre-v: The month have to be greater 0");
         require(_month <= 12, "pre-v: The month must not be greater 12");
         require(_day > 0, "pre-v: The day have to be greater 0");
-        require(_day <= MAXIMUM[_month -1], "pre-v: The day have to be less or equal %o", MAXIMUM[_month - 1]);
+        require(_day <= getMaximum(_year, _month), "pre-v: The day has to be less or equal %d", getMaximum(_year, _month));
 
         return true;
+    }
+    
+    private static class DefaultTrustManager implements X509TrustManager {
+
+        @Override
+        public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return null;
+        }
     }
 }
