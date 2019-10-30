@@ -298,7 +298,7 @@ public class OOSCDate implements DateInterface {
         ArrayList<Integer> parts = getCurrentTimeFromUTCTimeServer();
 
         // Only set new date, if there is a valid result
-        if (parts.size() == 3) {
+        if (parts.size() > 0) {
             Integer yearReceived = parts.get(0);
             Integer monthReceived = parts.get(1);
             Integer dayReceived = parts.get(2);
@@ -345,15 +345,25 @@ public class OOSCDate implements DateInterface {
 
         // result LIKE 2019-10-27 20:20:56 +00:00
         String dateAllTogether = result.split(" ")[0]; //2019-10-27
+        String timeAllTogether = result.split(" ")[1]; //20:20:56
         String[] dateSplitted = dateAllTogether.split("-");
+        String[] timeSplitted = timeAllTogether.split(":");
 
         Integer year = Integer.valueOf(dateSplitted[0]);
         Integer month = Integer.valueOf(dateSplitted[1]);
         Integer day = Integer.valueOf(dateSplitted[2]);
+        
+        Integer hour = Integer.valueOf(timeSplitted[0]);
+        Integer minute = Integer.valueOf(timeSplitted[1]);
+        Integer second = Integer.valueOf(timeSplitted[2]);
 
         parts.add(0, year);
         parts.add(1, month);
         parts.add(2, day);
+        
+        parts.add(3, hour);
+        parts.add(4, minute);
+        parts.add(5, second);
 
         return parts;
     }
