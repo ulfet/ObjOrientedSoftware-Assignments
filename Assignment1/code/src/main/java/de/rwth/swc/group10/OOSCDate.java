@@ -199,6 +199,9 @@ public class OOSCDate implements DateInterface {
             removeMonths(1);
             setDay(getMaximum(getYear(), getMonth()));
             removeDays(daysToRemove);
+        } else if (daysToRemove == getDay()) {
+            removeMonths(1);
+            setDay(MAXIMUM[getMonth() - 1]);
         } else {
             setDay(getDay() - daysToRemove);
         }
@@ -215,6 +218,9 @@ public class OOSCDate implements DateInterface {
             removeYears(1);
             setMonth(12);
             removeMonths(monthsToRemove);
+        } else if (monthsToRemove == getMonth()) {
+        	removeYears(1);
+            setMonth(12);
         } else {
             setMonth(getMonth() - monthsToRemove);
         }

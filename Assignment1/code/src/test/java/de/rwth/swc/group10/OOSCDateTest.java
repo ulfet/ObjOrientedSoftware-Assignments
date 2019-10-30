@@ -67,6 +67,17 @@ public class OOSCDateTest {
         assertEquals(1, _date.getMonth());
         assertEquals(1, _date.getDay());
     }
+    
+    @Test
+    public void removeDays() {
+    	DateInterface testDate = new OOSCDate(); 
+    	testDate.setDate(2019, 3, 1);
+    	testDate.removeDays(65);
+    	
+    	assertEquals(2018, testDate.getYear());
+    	assertEquals(12, testDate.getMonth());
+    	assertEquals(26, testDate.getDay());
+    }
 
     @Test
     public void timeBetweenTest()
