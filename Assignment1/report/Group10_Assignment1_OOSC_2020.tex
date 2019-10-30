@@ -90,10 +90,18 @@ Submitted by Group 10
 \setcounter{chapter}{1} % Aktuelles Assigment
 \section{Assignment: Reuse}
 
-% TODO: Assumptions
-
-"`[..] when re-using components, you reduce your effort by 80\% as in
-the case where you would re-implement from scratch [...]"' $\rightarrow$ reuse a component for 20\% of the development costs $\rightarrow$ RCR=0,2
+\paragraph{Assumptions:}
+\begin{itemize}
+    \item Four systems to develop (\textbf{L}ife-, \textbf{A}utomobile , \textbf{D}ental and \textbf{I}ndemnity insurance).
+    \item Costs for new code are 100\euro/LOC.
+    \item Costs for an error are 15.000\euro.
+    \item The existing system has 50KLOC.
+    \item "`[..] when re-using components, you reduce your effort by 80\% as in
+    the case where you would re-implement from scratch [...]"' $\rightarrow$ reuse a component for 20\% of the development costs $\rightarrow$ RCR=0,2
+    \item Changes for reusing the old system are about 4KLOC.
+    \item Modifying would require 70\% more effort $\rightarrow$ RCWR=1,7
+    \item Reusing 30\% for the life-, 50\% for the dental, 20\% for the indemnity and 10\% for the automobile insurance system
+\end{itemize}
 
 \begin{table}[h]
 	\centering
@@ -110,6 +118,7 @@ the case where you would re-implement from scratch [...]"' $\rightarrow$ reuse a
 	}
 \end{table}
 
+\paragraph{Calculation:}
 \begin{equation*}
 	ROI = \sum_i(RCA_i) - ADC = (RCA_L + RCA_D + RCA_I + RCA_A) - ADC
 \end{equation*}
@@ -120,6 +129,7 @@ the case where you would re-implement from scratch [...]"' $\rightarrow$ reuse a
 	MCA_i = \text{Percent of usage} * 50 \text{ KLOC} * 1,2/\text{KLOC} * 15000\text{\euro}
 \end{equation*}
 
+Life-insurance:
 \begin{equation*}
 	DCA_L = 30\% * 50 \text{ KLOC} * 0,8 * 100\text{ \euro/LOC} = 1200000 \text{\euro}
 \end{equation*}
@@ -130,6 +140,7 @@ the case where you would re-implement from scratch [...]"' $\rightarrow$ reuse a
 	RCA_L = DCA_L + MCA_L = 1200000\text{\euro} + 270000\text{\euro} = 1470000\text{\euro}
 \end{equation*}
 
+Dental insurance:
 \begin{equation*}
 	DCA_D = 50\% * 50 \text{ KLOC} * 0,8 * 100\text{ \euro/LOC} = 2000000 \text{\euro}
 \end{equation*}
@@ -140,6 +151,7 @@ the case where you would re-implement from scratch [...]"' $\rightarrow$ reuse a
 	RCA_D = DCA_D + MCA_D = 2000000\text{\euro} + 450000\text{\euro} = 2450000\text{\euro}
 \end{equation*}
 
+Indemnity insurance:
 \begin{equation*}
 	DCA_I = 20\% * 50 \text{ KLOC} * 0,8 * 100\text{ \euro/LOC} = 800000 \text{\euro}
 \end{equation*}
@@ -150,6 +162,7 @@ the case where you would re-implement from scratch [...]"' $\rightarrow$ reuse a
 	RCA_I = DCA_I + MCA_I = 800000\text{\euro} + 180000\text{\euro} = 980000\text{\euro}
 \end{equation*}
 
+Automobile insurance:
 \begin{equation*}
 	DCA_A = 10\% * 50 \text{ KLOC} * 0,8 * 100\text{ \euro/LOC} = 400000 \text{\euro}
 \end{equation*}
@@ -167,11 +180,7 @@ the case where you would re-implement from scratch [...]"' $\rightarrow$ reuse a
 	ROI = (1470000\text{\euro} + 2450000\text{\euro} + 980000\text{\euro} + 490000\text{\euro}) - 280000\text{\euro} = 5110000\text{\euro}
 \end{equation*}
 
-Due to this result I would make a clear reuse decision because it will bring much profit.
-
-
-
-
+The result is a ROI of 5.110.000\euro. So there will be a big benefit of reusing the existing system. Due to this result I would make a clear reuse decision.
 
 
 \section{Assignment: Design by Contract}
