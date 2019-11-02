@@ -195,12 +195,36 @@ The result is a ROI of 5.110.000\euro. So there will be a big benefit of reusing
 	% \lstinputlisting[style=ourJavaStyle]{\sourcepath /DateInterface.java}
 	% \lstinputlisting[style=ourJavaStyle]{\sourcepath /OOSCDate.java}
 	
+		\begin{itemize}
+			\item One can find our implementation in our submission under "OOSCDate" class, as stated by the assignment text.
+		\end{itemize}
+	
 	\item Make a robust implementation by using Defensive Programming.
+	
+		\begin{itemize}
+			\item One can find our implementation in our submission under "OOSCDateDefensive" together with its interface "DateInterfaceDefensive".
+			
+			\item "DateInterfaceDefensive" is just "DateInterface" with throws declarations added.
+		\end{itemize}
 	
 	\item  Write a set of JUnit tests to check the functionality and show how DbC and Defensive Programming works in your case.
 	
+		\begin{itemize}
+			\item One can find the tests for DbC in our submission under "OOSCDateTest" class.
+			
+			\item One can find the tests for Defensive Programming in our submission under "OOSCDateDefensiveTest" class.
+		\end{itemize}
+	
 	\item Explain the use of Design by Contract and Defensive Programming in your
 	implementation. Are there commonalities or conflicts?
+	
+		\begin{compactitem}
+			\item There are commonalities in the implementations of them.
+				\begin{itemize}
+					\item Both of our implementations nearly use the same code: however, just before every function, there is require() statements in the DbC approach, and there is "throw exception" statements in Defensive Programming approach.
+					\item One difference is in DbC, at the end of the functions, we have ensure() statements, and in Defensive Programming approach, at the entrance of functions, we check for validity of inputs (and throw exceptions if needed), but we do not check again at the end of the said functions.
+				\end{itemize}
+		\end{compactitem}
 \end{enumerate}
 
 \section{Assignment: Design by Contract with Inheritance}
