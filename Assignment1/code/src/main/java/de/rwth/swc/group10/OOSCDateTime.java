@@ -11,10 +11,28 @@ public class OOSCDateTime extends OOSCDate implements DateTimeInterface, Compara
     private int _minute;
     private int _second;
 	
+    public OOSCDateTime() {
+		super();
+		_hour = 0;
+		_minute = 0;
+		_second = 0;
+	}
+
+
 	@Override
 	public void setDateTime(int year, int month, int day, int hour, int minute, int second) {
+		require(invariant(), "inv-v");
+		
 		setDate(year, month, day);
 		setTime(hour, minute, second);
+		
+		ensure(getYear() == year, "The year is not properly set");
+        ensure(getMonth() == month, "The month is not properly set");
+        ensure(getDay() == day, "The day is not properly set");
+		ensure(getHour() == hour, "The hour is not properly set");
+        ensure(getMinute() == minute, "The minute is not properly set");
+        ensure(getSecond() == second, "The second is not properly set");
+        ensure(invariant(), "The invariant is not valid!");
 	}
 
 	@Override
@@ -94,7 +112,7 @@ public class OOSCDateTime extends OOSCDate implements DateTimeInterface, Compara
 
         if (getSecond() + secondsToAdd > 59) {
             // substract all coming seconds and switch to the next minute
-        	secondsToAdd -= (59 - getSecond());
+        	secondsToAdd -= (60 - getSecond());
             setSecond(0);
             addMinutes(1);
 
@@ -116,7 +134,7 @@ public class OOSCDateTime extends OOSCDate implements DateTimeInterface, Compara
 
         if (getMinute() + minutesToAdd > 59) {
             // substract all coming minutes and switch to the next hour
-        	minutesToAdd -= (59 - getMinute());
+        	minutesToAdd -= (60 - getMinute());
             setMinute(0);
             addHours(1);
 
@@ -137,7 +155,7 @@ public class OOSCDateTime extends OOSCDate implements DateTimeInterface, Compara
 
         if (getHour() + hoursToAdd > 23) {
             // substract all hours month and switch to the next day
-        	hoursToAdd -= (23 - getHour());
+        	hoursToAdd -= (24 - getHour());
             setHour(0);
             addDays(1);
 
@@ -157,7 +175,7 @@ public class OOSCDateTime extends OOSCDate implements DateTimeInterface, Compara
         require(secondsToRemove > 0, "pre-v: The second to remove (%o) have to be positive", secondsToRemove);
 
         if (secondsToRemove > getSecond()) {
-        	secondsToRemove -= getSecond();
+        	secondsToRemove -= (getSecond()+1);
             removeMinutes(1);
             setSecond(59);
             removeSeconds(secondsToRemove);
@@ -174,7 +192,7 @@ public class OOSCDateTime extends OOSCDate implements DateTimeInterface, Compara
         require(minutesToRemove > 0, "pre-v: The minute to remove (%o) have to be positive", minutesToRemove);
 
         if (minutesToRemove > getMinute()) {
-        	minutesToRemove -= getMinute();
+        	minutesToRemove -= (getMinute()+1);
             removeHours(1);
             setMinute(59);
             removeMinutes(minutesToRemove);
@@ -191,7 +209,7 @@ public class OOSCDateTime extends OOSCDate implements DateTimeInterface, Compara
         require(hoursToRemove > 0, "pre-v: The hour to remove (%o) have to be positive", hoursToRemove);
 
         if (hoursToRemove > getHour()) {
-        	hoursToRemove -= getHour();
+        	hoursToRemove -= (getHour()+1);
             removeDays(1);
             setHour(23);
             removeHours(hoursToRemove);
@@ -231,7 +249,7 @@ public class OOSCDateTime extends OOSCDate implements DateTimeInterface, Compara
 	        require(type <= 5, "pre-v: The hour must not be greater 5");
 	        
 	        if(type == DATETYPE_YEAR || type == DATETYPE_MONTH || type == DATETYPE_DAY) {
-	        	return super.daysBetween(otherDateTime);
+	        	return super.timeBetween(type, otherDateTime);
 	        }	        
 	        
 	        int result = 0;
