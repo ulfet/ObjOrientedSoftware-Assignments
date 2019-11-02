@@ -34,5 +34,8 @@ public interface DateInterfaceDefensive {
 
     @Override
     public String toString();
+    
+    // added for testing
+	public int getMaximum(int year, int month);
 }
 

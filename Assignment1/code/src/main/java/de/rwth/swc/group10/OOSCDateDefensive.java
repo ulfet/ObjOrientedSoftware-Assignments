@@ -41,6 +41,38 @@ public class OOSCDateDefensive implements DateInterfaceDefensive {
         31      // DEC
     };
     
+    public int getMaximum(int year, int month)
+    {
+        if (month != 2) {
+            // Not february
+            return MAXIMUM[month - 1];
+        } else {
+            // In leap years the maximum is 29
+            if (isLeapYear(year)) {
+                return MAXIMUM[1] + 1;
+            } else {
+                return MAXIMUM[1];
+            }
+        }
+    }
+
+    private static boolean isLeapYear(int year)
+    {
+        if (year % 400 == 0) {
+            return true;
+        }
+
+        if (year % 100 == 0) {
+            return false;
+        }
+
+        if (year % 4 == 0) {
+            return true;
+        }
+
+        return false;
+    }
+    
     public OOSCDateDefensive() {
     	_year = 1;
         _month = 1;
@@ -90,7 +122,7 @@ public class OOSCDateDefensive implements DateInterfaceDefensive {
 
 	@Override
 	public void setMonth(int month) throws WrongMonthException {
-		if (month >= 1)
+		if (month >= 1 && month <= 12)
 			_month = month;
 		else
 			throw new WrongMonthException();
@@ -98,8 +130,17 @@ public class OOSCDateDefensive implements DateInterfaceDefensive {
 
 	@Override
 	public void setDay(int day) throws WrongDayException {
-		if (day >= 1)
-			_day = day;
+		if (day >= 1 && day <= 31) {
+			//safer inputs, BUT check if day exceeds the max possible
+			
+			int maxDayPossible = getMaximum(this.getYear(), this.getMonth());
+			if (maxDayPossible < day) {
+				throw new WrongDayException();
+			}
+				
+			else
+				_day = day;
+		}
 		else
 			throw new WrongDayException();
 	}
@@ -121,14 +162,15 @@ public class OOSCDateDefensive implements DateInterfaceDefensive {
 
 	@Override
 	public void addDays(int daysToAdd) throws WrongDayException, WrongMonthException, WrongYearException {
-		if (daysToAdd <= 0)
+		if (daysToAdd < 0)
 			throw new WrongDayException();
 		
-		if (getDay() + daysToAdd > MAXIMUM[getMonth() - 1]) {
-            // subtract all coming days of the current month + 1 for the switch to the next month
-            daysToAdd -= (MAXIMUM[getMonth() - 1] - getDay()) + 1;
-            addMonths(1);
+		if (getDay() + daysToAdd > getMaximum(getYear(), getMonth())) {
+            // substract all coming days of the current month + 1 for the switch to the next month
+            daysToAdd -= (getMaximum(getYear(), getMonth()) - getDay()) + 1;
+
             setDay(1);
+            addMonths(1);
 
             if (daysToAdd > 0) {
                 addDays(daysToAdd);
@@ -140,14 +182,14 @@ public class OOSCDateDefensive implements DateInterfaceDefensive {
 
 	@Override
 	public void addMonths(int monthsToAdd) throws WrongMonthException, WrongYearException {
-		if (monthsToAdd <= 0)
+		if (monthsToAdd < 0)
 			throw new WrongMonthException();
 		
 		if (getMonth() + monthsToAdd > 12) {
-            // subtract all coming month and one extra for the switch to the next year
+            // substract all coming month and one extra for the switch to the next year
             monthsToAdd -= (12 - getMonth()) + 1;
-            addYears(1);
             setMonth(1);
+            addYears(1);
 
             if (monthsToAdd > 0) {
                 addMonths(monthsToAdd);
@@ -159,7 +201,7 @@ public class OOSCDateDefensive implements DateInterfaceDefensive {
 
 	@Override
 	public void addYears(int yearsToAdd) throws WrongYearException {
-		if (yearsToAdd <= 0)
+		if (yearsToAdd < 0)
 			throw new WrongYearException();
 		else
 			setYear(getYear() + yearsToAdd);
@@ -167,13 +209,13 @@ public class OOSCDateDefensive implements DateInterfaceDefensive {
 
 	@Override
 	public void removeDays(int daysToRemove) throws WrongDayException, WrongMonthException, WrongYearException {
-		if (daysToRemove <= 0)
+		if (daysToRemove < 0)
 			throw new WrongDayException();
 		
 		if (daysToRemove > getDay()) {
             daysToRemove -= getDay();
             removeMonths(1);
-            setDay(MAXIMUM[getMonth() - 1]);
+            setDay(getMaximum(getYear(), getMonth()));
             removeDays(daysToRemove);
         } else if (daysToRemove == getDay()) {
             removeMonths(1);
@@ -185,7 +227,7 @@ public class OOSCDateDefensive implements DateInterfaceDefensive {
 
 	@Override
 	public void removeMonths(int monthsToRemove) throws WrongMonthException, WrongYearException {
-		if (monthsToRemove <= 0)
+		if (monthsToRemove < 0)
 			throw new WrongMonthException();
 		
 		if (monthsToRemove > getMonth()) {
@@ -242,26 +284,59 @@ public class OOSCDateDefensive implements DateInterfaceDefensive {
 
 	@Override
 	public int daysBetween(DateInterfaceDefensive otherDate) {
-		int thisInstanceDays = this.daysSinceChrist();
-        int inputInstanceDays = ((OOSCDateDefensive) otherDate).daysSinceChrist();
-        int difference = thisInstanceDays - inputInstanceDays;
-        
-        return difference;
+		int result = timeBetween(DATETYPE_DAY, otherDate);
+		return result;
 	}
 
 	@Override
 	public int timeBetween(int type, DateInterfaceDefensive otherDate) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int result = 0;
+
+        if (type == DATETYPE_YEAR) {
+            // Easiest case doesn't include any counting
+            result = Math.abs(this.getYear() - otherDate.getYear());
+        } else {
+            DateInterfaceDefensive greater;
+            DateInterfaceDefensive smaller;
+
+            if (getYear() > otherDate.getYear() ||
+                (getYear() == otherDate.getYear() &&
+                    (getMonth() > otherDate.getMonth() ||
+                    (getMonth() == otherDate.getMonth() && getDay() > otherDate.getDay())))) {
+                greater = this;
+                smaller = otherDate;
+            } else {
+                greater = otherDate;
+                smaller = this;
+            }
+
+            OOSCDate intermediate = new OOSCDate();
+            intermediate.setDate(smaller.getYear(), smaller.getMonth(), smaller.getDay());
+
+            while (!(intermediate.getYear() == greater.getYear() &&
+                     intermediate.getMonth() == greater.getMonth() &&
+                     (type == DATETYPE_MONTH || intermediate.getDay() == greater.getDay()))) {
+                if (type == DATETYPE_DAY) {
+                    intermediate.addDays(1);
+                    result++;
+                } else {
+                    intermediate.addMonths(1);
+                    result++;
+                }
+            }
+        }
+        
+        return result;
 	}
 
 	@Override
 	public void syncWithUTCTimeserver() throws WrongYearException, WrongMonthException, WrongDayException {
 
-        ArrayList<Integer> parts = getCurrentTimeFromUTCTimeServer();
+		ArrayList<Integer> parts = getCurrentTimeFromUTCTimeServer();
 
         // Only set new date, if there is a valid result
-        if (parts.size() >0) {
+        if (parts.size() > 0) {
             Integer yearReceived = parts.get(0);
             Integer monthReceived = parts.get(1);
             Integer dayReceived = parts.get(2);
@@ -272,7 +347,7 @@ public class OOSCDateDefensive implements DateInterfaceDefensive {
 	
 	ArrayList<Integer> getCurrentTimeFromUTCTimeServer() {
 		
-        ArrayList<Integer> parts = new ArrayList<>();
+		ArrayList<Integer> parts = new ArrayList<>();
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet request = new HttpGet(TIMESERVER_URL);
