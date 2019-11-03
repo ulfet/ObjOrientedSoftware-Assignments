@@ -240,7 +240,10 @@ Based on the previous result, you are now required to extend your class to handl
 	\item Is it also necessary to extend the Interface?
 
 		\begin{itemize}
-			\item Yes, it is necessary to extend the Interface to handle more details.
+            \item No, it is not necessary to extend the interface. The new methods could be added in the OOSCDateTime class and called from an object of this class directly.
+            \item An extension inside the "DateInterface" is not possible because the "OOSCDate" class does not implement any of the hour/minute/second-methods.
+			\item But we created a new interface "DateTimeInterface" which extends the "DateInterface". So it is possible to easily replace our OOSCDateTime class with an other implementation. 
+            \item With the new interface the user of the class does not have to know about the real implementation. Instead he/she just uses an object of the interface type. In case of dependency injection the user doesn't even have to know the name of the OOSCDateTime class.
 			\item One can find the extended interface in our submission under "DateTimeInterface".
 		\end{itemize}
 
