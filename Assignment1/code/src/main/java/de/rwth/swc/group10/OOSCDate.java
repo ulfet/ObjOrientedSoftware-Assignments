@@ -201,7 +201,7 @@ public class OOSCDate implements DateInterface {
             removeDays(daysToRemove);
         } else if (daysToRemove == getDay()) {
             removeMonths(1);
-            setDay(MAXIMUM[getMonth() - 1]);
+            setDay(getMaximum(getYear(), getMonth()));
         } else {
             setDay(getDay() - daysToRemove);
         }
@@ -219,7 +219,7 @@ public class OOSCDate implements DateInterface {
             setMonth(12);
             removeMonths(monthsToRemove);
         } else if (monthsToRemove == getMonth()) {
-        	removeYears(1);
+            removeYears(1);
             setMonth(12);
         } else {
             setMonth(getMonth() - monthsToRemove);
@@ -352,7 +352,7 @@ public class OOSCDate implements DateInterface {
         Integer year = Integer.valueOf(dateSplitted[0]);
         Integer month = Integer.valueOf(dateSplitted[1]);
         Integer day = Integer.valueOf(dateSplitted[2]);
-        
+
         Integer hour = Integer.valueOf(timeSplitted[0]);
         Integer minute = Integer.valueOf(timeSplitted[1]);
         Integer second = Integer.valueOf(timeSplitted[2]);
@@ -360,7 +360,7 @@ public class OOSCDate implements DateInterface {
         parts.add(0, year);
         parts.add(1, month);
         parts.add(2, day);
-        
+
         parts.add(3, hour);
         parts.add(4, minute);
         parts.add(5, second);
