@@ -245,7 +245,7 @@ public class OOSCDateTime extends OOSCDate implements DateTimeInterface, Compara
             require(invariant(), "inv-v");
             require(otherDateTime != null, "pre-v: otherDate is NULL");
             require(type >= 0, "pre-v: The type have to be greater or equals 0");
-            require(type <= 5, "pre-v: The hour must not be greater 5");
+            require(type <= 5, "pre-v: The type must not be greater 5");
 
             if(type == DATETYPE_YEAR || type == DATETYPE_MONTH || type == DATETYPE_DAY) {
                 return super.timeBetween(type, otherDateTime);
