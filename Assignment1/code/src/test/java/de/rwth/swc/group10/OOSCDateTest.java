@@ -1,11 +1,13 @@
 package de.rwth.swc.group10;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.valid4j.errors.RequireViolation;
 
 public class OOSCDateTest {
 
@@ -42,6 +44,16 @@ public class OOSCDateTest {
     }
 
     @Test
+    public void add0Days() {
+        try {
+            _date.addDays(0);
+            fail("Should require positive, non-zero integers");
+        } catch (RequireViolation e) {
+            // handle exception
+        }
+    }
+
+    @Test
     public void addMonthsMoreThan12() {
         _date.addMonths(13);
 
@@ -60,12 +72,32 @@ public class OOSCDateTest {
     }
 
     @Test
+    public void add0Months() {
+        try {
+            _date.addMonths(0);
+            fail("Should require positive, non-zero integers");
+        } catch (RequireViolation e) {
+            // handle exception
+        }
+    }
+
+    @Test
     public void addYears() {
         _date.addYears(10);
 
         assertEquals(11, _date.getYear());
         assertEquals(1, _date.getMonth());
         assertEquals(1, _date.getDay());
+    }
+
+    @Test
+    public void add0Years() {
+        try {
+            _date.addYears(0);
+            fail("Should require positive, non-zero integers");
+        } catch (RequireViolation e) {
+            // handle exception
+        }
     }
     
     @Test
@@ -105,6 +137,22 @@ public class OOSCDateTest {
     }
 
     @Test
+    public void timeBetweenWrongInput() {
+        try {
+            DateInterface otherDate = new OOSCDate();
+            _date.setDate(2019, 11, 03);
+
+            otherDate.setDate(2019, 11, 30);
+
+            _date.timeBetween(6, otherDate);
+
+            fail("Should require a value >=0 and <=5");
+        } catch (RequireViolation e) {
+            // handle exception
+        }
+    }
+
+    @Test
     public void syncWithUTCTimeserverTest() {
         _date.syncWithUTCTimeserver();
 
@@ -136,6 +184,6 @@ public class OOSCDateTest {
     	
     	int diff = _date.daysBetween(otherDate);
     	assertEquals(diff, 365);
-    	System.out.println("Paased daysBetweenTest");
+    	System.out.println("Passed daysBetweenTest");
     }
 }

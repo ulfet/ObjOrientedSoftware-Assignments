@@ -251,6 +251,8 @@ public class OOSCDate implements DateInterface {
     public int timeBetween(int type, DateInterface otherDate) {
         require(invariant(), "inv-v");
         require(otherDate != null, "pre-v: otherDate is NULL");
+        require(type >= 0, "pre-v: The type have to be greater or equals 0");
+        require(type <= 2, "pre-v: The type must not be greater 2");
 
         int result = 0;
 
