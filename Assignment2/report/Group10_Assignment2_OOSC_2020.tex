@@ -96,14 +96,17 @@
 			\begin{tabular}{|l|l|}
 				\hline
 				\multicolumn{1}{|c|}{\textbf{Statement}} & \multicolumn{1}{c|}{\textbf{Output or Description of Failure}} \\ \hline
-				cow.writeName();                         &                                                                \\ \hline
-				aurochs.writeName();                     &                                                                \\ \hline
-				((Material)aurochs).writeName();         &                                                                \\ \hline
-				((Aurochs)cow).writeName();              &                                                                \\ \hline
-				((Cow)aurochs).writeName();              &                                                                \\ \hline
-				aurochs.writeLatin();                    &                                                                \\ \hline
-				aurochs.writeDescription();            &                                                                \\ \hline
-				((Aurochs)material).writeName();         &                                                                \\ \hline
+				cow.writeName();                         & output: "Cow"         \\ \hline
+				aurochs.writeName();                     & output: "Aurochs"     \\ \hline
+				((Material)aurochs).writeName();         & output: "Material"    \\ \hline
+				((Aurochs)cow).writeName();              & output: "Aurochs"     \\ \hline
+				((Cow)aurochs).writeName();              & fail: we cannot limit to subclass
+				                                                                 \\ \hline
+				aurochs.writeLatin();                    & output: "Bos primigenius"
+				                                                                 \\ \hline
+				aurochs.writeDescription();              & output: "Aurochs"     \\ \hline
+				((Aurochs)material).writeName();         & fail: we cannot limit to subclass
+				                                                                 \\ \hline
 			\end{tabular}
 		}
 	\end{table}

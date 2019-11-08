@@ -13,7 +13,7 @@
 <XPD:OBJ name="OwnedElements[0]" type="UMLPackage" guid="/qWYTcs8xka3DunIqCsiFgAA">
 <XPD:ATTR name="Name" type="string">Class diagram</XPD:ATTR>
 <XPD:REF name="Namespace">nme1EP6QVU6rH1jbR3snaAAA</XPD:REF>
-<XPD:ATTR name="#OwnedDiagrams" type="integer">1</XPD:ATTR>
+<XPD:ATTR name="#OwnedDiagrams" type="integer">5</XPD:ATTR>
 <XPD:OBJ name="OwnedDiagrams[0]" type="UMLClassDiagram" guid="dqeG6Sox3EKIlrrgBfkNrQAA">
 <XPD:ATTR name="Name" type="string">ClassDiagram1</XPD:ATTR>
 <XPD:REF name="DiagramOwner">/qWYTcs8xka3DunIqCsiFgAA</XPD:REF>
@@ -166,6 +166,38 @@
 <XPD:REF name="Model">xhSC2Nk6o0u8DHTRiRMGbAAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
+</XPD:OBJ>
+</XPD:OBJ>
+<XPD:OBJ name="OwnedDiagrams[1]" type="UMLClassDiagram" guid="dz8lnCJluUijdNpE/gLjqwAA">
+<XPD:ATTR name="Name" type="string">ClassDiagram2</XPD:ATTR>
+<XPD:REF name="DiagramOwner">/qWYTcs8xka3DunIqCsiFgAA</XPD:REF>
+<XPD:OBJ name="DiagramView" type="UMLClassDiagramView" guid="pRrLNLIrbU6+/POPVl/LVgAA">
+<XPD:REF name="Model">dz8lnCJluUijdNpE/gLjqwAA</XPD:REF>
+<XPD:REF name="Diagram">dz8lnCJluUijdNpE/gLjqwAA</XPD:REF>
+</XPD:OBJ>
+</XPD:OBJ>
+<XPD:OBJ name="OwnedDiagrams[2]" type="UMLClassDiagram" guid="sYI5QseYyE+F4uam9n9ZngAA">
+<XPD:ATTR name="Name" type="string">ClassDiagram4</XPD:ATTR>
+<XPD:REF name="DiagramOwner">/qWYTcs8xka3DunIqCsiFgAA</XPD:REF>
+<XPD:OBJ name="DiagramView" type="UMLClassDiagramView" guid="e6OjUvz1dE2Z3YyRs+jflgAA">
+<XPD:REF name="Model">sYI5QseYyE+F4uam9n9ZngAA</XPD:REF>
+<XPD:REF name="Diagram">sYI5QseYyE+F4uam9n9ZngAA</XPD:REF>
+</XPD:OBJ>
+</XPD:OBJ>
+<XPD:OBJ name="OwnedDiagrams[3]" type="UMLClassDiagram" guid="v5ebUCSoZEqqDvV0LDmmxgAA">
+<XPD:ATTR name="Name" type="string">ClassDiagram5</XPD:ATTR>
+<XPD:REF name="DiagramOwner">/qWYTcs8xka3DunIqCsiFgAA</XPD:REF>
+<XPD:OBJ name="DiagramView" type="UMLClassDiagramView" guid="zDdzOl2gLkis2Ec2U2mSJwAA">
+<XPD:REF name="Model">v5ebUCSoZEqqDvV0LDmmxgAA</XPD:REF>
+<XPD:REF name="Diagram">v5ebUCSoZEqqDvV0LDmmxgAA</XPD:REF>
+</XPD:OBJ>
+</XPD:OBJ>
+<XPD:OBJ name="OwnedDiagrams[4]" type="UMLClassDiagram" guid="8J9JyjxTa0S+zSSsS0FCeQAA">
+<XPD:ATTR name="Name" type="string">ClassDiagram6</XPD:ATTR>
+<XPD:REF name="DiagramOwner">/qWYTcs8xka3DunIqCsiFgAA</XPD:REF>
+<XPD:OBJ name="DiagramView" type="UMLClassDiagramView" guid="BiJjOkbwLUue47wcDWkHhgAA">
+<XPD:REF name="Model">8J9JyjxTa0S+zSSsS0FCeQAA</XPD:REF>
+<XPD:REF name="Diagram">8J9JyjxTa0S+zSSsS0FCeQAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
 <XPD:ATTR name="#OwnedElements" type="integer">5</XPD:ATTR>
