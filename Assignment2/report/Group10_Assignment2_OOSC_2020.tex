@@ -1,0 +1,119 @@
+\documentclass[a4paper,12pt,oneside]{scrreprt}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ae,aecompl}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{ulem}
+\usepackage{cancel}
+\usepackage{float}
+\usepackage{color}
+%\usepackage{titlesec}
+\usepackage{geometry}
+\geometry{verbose,a4paper,tmargin=25mm,bmargin=25mm,lmargin=15mm,rmargin=25mm}
+%\titlelabel{\thetitle.\quad}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{paralist}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+
+\renewcommand{\rmdefault}{phv}
+\renewcommand{\sfdefault}{phv}
+
+% our OWN imports for our use
+\usepackage{listings}
+\lstdefinestyle{ourJavaStyle}{
+	language=Java,
+	%numbers=left,
+	%numbersep=8pt,
+	stepnumber=1,
+	tabsize=2,
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\ttfamily\scriptsize,
+	keywordstyle=\color{blue}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{green}\ttfamily,
+	breaklines=true
+}
+
+\newcommand*{\sourcepath}{../code/src/main/java/de/rwth/swc/group10}
+\newcommand*{\testpath}{../code/src/test/java/de/rwth/swc/group10}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+%\titleformat{\subsection}
+%{\normalfont\fontfamily{phv}\fontsize{14}{17}\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+	
+	\begin{tabular}{ccc}
+		\begin{large} \textbf{Prof. Lichter} \end{large} &
+		
+		\begin{minipage}[H]{3.5cm}
+			\centering
+			\begin{large} OOSC \end{large} \\
+			\begin{large} WS 2019/2020 \end{large}
+		\end{minipage} &
+		
+		\begin{minipage}[H]{4cm}
+			\includegraphics[keepaspectratio,width=\textwidth,angle=0]{images/swc.png}
+		\end{minipage} \\
+		Andreas Steffens, Konrad F\"ogen &  &  \\
+		& \begin{huge} \textbf{Submission 2} \end{huge}&  \\
+		& oosc@swc.rwth-aachen.de &  \\
+		& & \\
+		% Hier drunter muessen die Daten noch angepasst werden
+		Issued: 04.11.2019 &
+		Submission: 18.11.2019 &
+		Discussion: 21.11.2019 \\
+	\end{tabular}
+	\newline \newline \newline
+	\centering
+	Submitted by Group 10
+	
+	\begin{tabular}{ll}
+		Dominik Bittner, & 369202 \\
+		Ulfet Cetin, & 391819\\
+		Philipp Hochmann, & 356148 \\
+		Anar Orujov, & 391825\\
+		Ada Slupczynski, & 384147\\
+		(sorted on lastname basis)
+	\end{tabular}
+	
+	\setcounter{chapter}{2} % Aktuelles Assigment
+	\section{Assignment:}
+	
+	\begin{table}[h]
+		\centering
+		\resizebox{\textwidth}{!}
+		{%
+			\begin{tabular}{|l|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{Statement}} & \multicolumn{1}{c|}{\textbf{Output or Description of Failure}} \\ \hline
+				cow.writeName();                         & output: "Cow"         \\ \hline
+				aurochs.writeName();                     & output: "Aurochs"     \\ \hline
+				((Material)aurochs).writeName();         & output: "Material"    \\ \hline
+				((Aurochs)cow).writeName();              & output: "Aurochs"     \\ \hline
+				((Cow)aurochs).writeName();              & fail: we cannot limit to subclass
+				                                                                 \\ \hline
+				aurochs.writeLatin();                    & output: "Bos primigenius"
+				                                                                 \\ \hline
+				aurochs.writeDescription();              & output: "Aurochs"     \\ \hline
+				((Aurochs)material).writeName();         & fail: we cannot limit to subclass
+				                                                                 \\ \hline
+			\end{tabular}
+		}
+	\end{table}
+	
+	\section{Assignment:}
+	\section{Assignment:}
+	\section{Assignment:}
+	\section{Assignment:}
+	\section{Assignment:}
+\end{document}
