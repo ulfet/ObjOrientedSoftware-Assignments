@@ -89,6 +89,8 @@
 	\setcounter{chapter}{2} % Aktuelles Assigment
 	\section{Assignment:}
 	
+    % TODO: Image of the UML is missing
+    
 	\begin{table}[h]
 		\centering
 		\resizebox{\textwidth}{!}
@@ -100,12 +102,12 @@
 				aurochs.writeName();                     & output: "Aurochs"     \\ \hline
 				((Material)aurochs).writeName();         & output: "Material"    \\ \hline
 				((Aurochs)cow).writeName();              & output: "Aurochs"     \\ \hline
-				((Cow)aurochs).writeName();              & fail: we cannot limit to subclass
-				                                                                 \\ \hline
-				aurochs.writeLatin();                    & output: "Bos primigenius"
-				                                                                 \\ \hline
-				aurochs.writeDescription();              & output: "Aurochs"     \\ \hline
-				((Aurochs)material).writeName();         & fail: we cannot limit to subclass
+				((Cow)aurochs).writeName();              & output: 
+                "Cow"         \\ \hline
+				aurochs.writeLatin();                    & output: "Bos primigenius"  \\ \hline
+				auerochse.writeDescription();              & fail:
+                variable auerochse is not defined.      \\ \hline
+				((Aurochs)material).writeName();         & fail: we cannot limit to subclass, variable material is not a Aurochs.
 				                                                                 \\ \hline
 			\end{tabular}
 		}
