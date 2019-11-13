@@ -85,7 +85,7 @@
 		Ada Slupczynski, & 384147\\
 		(sorted on lastname basis)
 	\end{tabular}
-	
+    
 	\setcounter{chapter}{2} % Aktuelles Assigment
 	\section{Assignment:}
 	
@@ -115,6 +115,23 @@
 	
 	\section{Assignment:}
 	\section{Assignment:}
+    
+    \begin{flushleft}
+        This inheritance hierarchy fits in two types of Meyer's inheritance taxonomy:
+        \begin{enumerate}
+            \item Subtype Inheritance: The Circle and the Ellipse are both GeoObjects. So there is a 'is-a' relation between GeoObject and it's subclasses.
+            \item Extension Inheritance: Both child classes provides new functionallity which doesn't fit to a GeoObject. Not every GeoObject has a diameter.
+        \end{enumerate}
+    
+        In the code there is no redefinition, so it doesn't fit into Variation Inheritance nor Uneffective Inheritance. Also the \textit{GeoObject} is not abstract, so it doesn't fit into the Reification Inheritance nor the Structure Inheritance. As well it doesn't fit into Implementation Inheritance, because the parent objects don't make use of any functionallity which is provided by the parent.
+        
+        % TODO: View, Restriction and Facility
+        
+        But in both cases there is a point, that could be improved. If the author want to use a Subtype Inheritance, it would make sense to make \textit{Circle} a subclass of \textit{Ellipse}. Because every circle is a ellipse. Than it is not necessary to provide the same implementation for the diameter-methods again.
+        
+        If the author want to use a Extension Inheritance the hierarchy could be changed in that way, that \textit{Ellipse} is a subclass of \textit{Circle}. The ellipse provides more functionallity than the circle. So there is still an extension but the diameter-methods don't have to be implemented again.
+    \end{flushleft}
+    
 	\section{Assignment:}
 	\section{Assignment:}
 	\section{Assignment:}
