@@ -1,0 +1,7 @@
+\subsection{}
+
+\begin{enumerate}
+\item Factory Method: This pattern supports universal polymorphism, since it can return objects of potentially infinitely many derived types. It is a common pattern to avoid calling a constructor of a specific derived type directly. It is better to call a factory than to call a constructor, if the factory should decide which concrete subclass to use, or if additional subclasses may be added to the application in the future. In the example code given, a factory to construct a node from a token (see ex. 7) is given. The returned Node is polymorphic, because it may be an OperatorNode when the supplied token is a string that matches an operator, or a ConstantNode when the supplied token matches a number.
+\item todo
+\item todo
+\end{enumerate}

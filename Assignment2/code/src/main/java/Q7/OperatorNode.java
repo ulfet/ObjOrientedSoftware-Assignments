@@ -6,8 +6,9 @@ public class OperatorNode implements Node
 	Node childA;
 	Node childB;
 	
-	public OperatorNode(Node childA, Node childB)
+	public OperatorNode(Operator op, Node childA, Node childB)
 	{
+		this.op = op;
 		this.childA = childA;
 		this.childB = childB;
 	}

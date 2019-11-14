@@ -26,6 +26,9 @@
 \renewcommand{\rmdefault}{phv}
 \renewcommand{\sfdefault}{phv}
 
+% for splitting page into many pages vertically
+\usepackage{paracol}
+
 % our OWN imports for our use
 \usepackage{listings}
 \lstdefinestyle{ourJavaStyle}{
@@ -43,8 +46,8 @@
 	breaklines=true
 }
 
-\newcommand*{\sourcepath}{../code/src/main/java/de/rwth/swc/group10}
-\newcommand*{\testpath}{../code/src/test/java/de/rwth/swc/group10}
+\newcommand*{\sourcepath}{../code/src/main/java}
+\newcommand*{\testpath}{../code/src/test/java}
 
 \renewcommand{\thesubsection}{\thesection.\alph{subsection}}
 %\titleformat{\subsection}
@@ -114,6 +117,28 @@
 	\end{table}
 	
 	\section{Assignment:}
+    
+    In the given class diagram inheritance is not implemented as a "is a"-relation. 
+    
+    \begin{enumerate}
+        \item A cover is not a book, so it sould not inherite from it.
+        \item There is something mixed up with literature and text as content:
+        \begin{itemize}
+            \item Literature is not necessary a single text. It may contains of more than one.
+            \item A book is literature, but includes much text.
+        \end{itemize}
+        \item A paper is not a book.
+    \end{enumerate}
+
+    Most of the associations are correct. But the associations from the author may be reversed. Instead giving the author a list of written text -- and additionally a list of written papers -- you can give each text an author.
+    
+    This leads to the conclusion, that the quality how inheritance and
+    association was implemented here, is not very good nor consistent.
+    
+    \includegraphics[width=\textwidth]{../uml/2_2.png}
+    
+    In this class diagram the \textit{Text}-class is separated. Instead \textit{Literature} is the parent of \textit{Book} and \textit{Paper}. So a paper is no longer a book. Each literature has an author. The author is still a person, but now can write texts by itself. Some texts are summarized in a \textit{Page}. A \textit{Cover} is a special kind of page with an image. \textit{Chapter}s bind some pages together. But a \textit{Literature} still have a list of pages and a list of chapters separatly.
+    
 	\section{Assignment:}
     
     \begin{flushleft}
@@ -131,8 +156,10 @@
         
         If the author want to use a Extension Inheritance the hierarchy could be changed in that way, that \textit{Ellipse} is a subclass of \textit{Circle}. The ellipse provides more functionallity than the circle. So there is still an extension but the diameter-methods don't have to be implemented again.
     \end{flushleft}
-    
+	
+	\clearpage
 	\section{Assignment:}
+		\input{q5/ex5.tex}
 	\section{Assignment:}
 	\section{Assignment:}
 	\section{}
