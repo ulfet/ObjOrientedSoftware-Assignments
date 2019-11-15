@@ -26,6 +26,9 @@
 \renewcommand{\rmdefault}{phv}
 \renewcommand{\sfdefault}{phv}
 
+% for splitting page into many pages vertically
+\usepackage{paracol}
+
 % our OWN imports for our use
 \usepackage{listings}
 \lstdefinestyle{ourJavaStyle}{
@@ -43,8 +46,8 @@
 	breaklines=true
 }
 
-\newcommand*{\sourcepath}{../code/src/main/java/de/rwth/swc/group10}
-\newcommand*{\testpath}{../code/src/test/java/de/rwth/swc/group10}
+\newcommand*{\sourcepath}{../code/src/main/java}
+\newcommand*{\testpath}{../code/src/test/java}
 
 \renewcommand{\thesubsection}{\thesection.\alph{subsection}}
 %\titleformat{\subsection}
@@ -85,7 +88,7 @@
 		Ada Slupczynski, & 384147\\
 		(sorted on lastname basis)
 	\end{tabular}
-	
+    
 	\setcounter{chapter}{2} % Aktuelles Assigment
 	\section{Assignment:}
 	
@@ -137,7 +140,25 @@
     In this class diagram the \textit{Text}-class is separated. Instead \textit{Literature} is the parent of \textit{Book} and \textit{Paper}. So a paper is no longer a book. Each literature has an author. The author is still a person, but now can write texts by itself. Some texts are summarized in a \textit{Page}. A \textit{Cover} is a special kind of page with an image. \textit{Chapter}s bind some pages together. But a \textit{Literature} still have a list of pages and a list of chapters separatly.
     
 	\section{Assignment:}
+    
+    \begin{flushleft}
+        This inheritance hierarchy fits in two types of Meyer's inheritance taxonomy:
+        \begin{enumerate}
+            \item Subtype Inheritance: The Circle and the Ellipse are both GeoObjects. So there is a 'is-a' relation between GeoObject and it's subclasses.
+            \item Extension Inheritance: Both child classes provides new functionallity which doesn't fit to a GeoObject. Not every GeoObject has a diameter.
+        \end{enumerate}
+    
+        In the code there is no redefinition, so it doesn't fit into Variation Inheritance nor Uneffective Inheritance. Also the \textit{GeoObject} is not abstract, so it doesn't fit into the Reification Inheritance nor the Structure Inheritance. As well it doesn't fit into Implementation Inheritance, because the child objects don't make use of any functionallity which is provided by the parent.
+        
+        It also cannot be considered as `Restriction Inheritance`, as GeoObject is too broad and although The Circle and the Ellipse are actually subsets of GeoObjects that have definite centers (restricted), we would not count that as restriction inheritance. Assuming that the Ellipse inherits from the Circle, then it would be more specific and we would have counted that scenario as restriction inheritance (ellipse being a special form of circle). Moreover, this inheritance cannot be counted as `Facility Inheritance`, as it is neither constant inheritance (no staticly inherited features) nor machine inheritance (no abstraction of a machine).
+        
+        But in both cases there is a point, that could be improved. If the author want to use a Subtype Inheritance, it would make sense to make \textit{Circle} a subclass of \textit{Ellipse}. Because every circle is a ellipse. Than it is not necessary to provide the same implementation for the diameter-methods again.
+        
+        If the author want to use a Extension Inheritance the hierarchy could be changed in that way, that \textit{Ellipse} is a subclass of \textit{Circle}. The ellipse provides more functionallity than the circle. So there is still an extension but the diameter-methods don't have to be implemented again.
+    \end{flushleft}
+	
 	\section{Assignment:}
+		\input{q5/ex5.tex}
 	\section{Assignment:}
 	\section{Assignment:}
 	\section{}
