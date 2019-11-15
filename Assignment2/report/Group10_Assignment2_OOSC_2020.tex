@@ -150,14 +150,13 @@
     
         In the code there is no redefinition, so it doesn't fit into Variation Inheritance nor Uneffective Inheritance. Also the \textit{GeoObject} is not abstract, so it doesn't fit into the Reification Inheritance nor the Structure Inheritance. As well it doesn't fit into Implementation Inheritance, because the child objects don't make use of any functionallity which is provided by the parent.
         
-        % TODO: View, Restriction and Facility
+        It also cannot be considered as `Restriction Inheritance`, as GeoObject is too broad and although The Circle and the Ellipse are actually subsets of GeoObjects that have definite centers (restricted), we would not count that as restriction inheritance. Assuming that the Ellipse inherits from the Circle, then it would be more specific and we would have counted that scenario as restriction inheritance (ellipse being a special form of circle). Moreover, this inheritance cannot be counted as `Facility Inheritance`, as it is neither constant inheritance (no staticly inherited features) nor machine inheritance (no abstraction of a machine).
         
         But in both cases there is a point, that could be improved. If the author want to use a Subtype Inheritance, it would make sense to make \textit{Circle} a subclass of \textit{Ellipse}. Because every circle is a ellipse. Than it is not necessary to provide the same implementation for the diameter-methods again.
         
         If the author want to use a Extension Inheritance the hierarchy could be changed in that way, that \textit{Ellipse} is a subclass of \textit{Circle}. The ellipse provides more functionallity than the circle. So there is still an extension but the diameter-methods don't have to be implemented again.
     \end{flushleft}
 	
-	\clearpage
 	\section{Assignment:}
 		\input{q5/ex5.tex}
 	\section{Assignment:}
