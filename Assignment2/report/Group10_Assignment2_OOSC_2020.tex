@@ -92,7 +92,7 @@
 	\setcounter{chapter}{2} % Aktuelles Assigment
 	\section{Assignment:}
 	
-    % TODO: Image of the UML is missing
+    \includegraphics[keepaspectratio,width=0.25\textwidth,angle=0]{images/ClassDiagram1.jpg}
     
 	\begin{table}[h]
 		\centering
@@ -139,6 +139,8 @@
     
     In this class diagram the \textit{Text}-class is separated. Instead \textit{Literature} is the parent of \textit{Book} and \textit{Paper}. So a paper is no longer a book. Each literature has an author. The author is still a person, but now can write texts by itself. Some texts are summarized in a \textit{Page}. A \textit{Cover} is a special kind of page with an image. \textit{Chapter}s bind some pages together. But a \textit{Literature} still have a list of pages and a list of chapters separatly.
     
+    As additional comment, we would like to indicate we consider paper to be a piece of (for example) scientific literature. We add this comment due to the potential disambiguity coming from the different meaning of the word Paper - one being the material and one being a piece of literature. 
+    
 	\section{Assignment:}
     
     \begin{flushleft}
@@ -158,8 +160,11 @@
     \end{flushleft}
 	
 	\section{Assignment:}
-		\input{q5/ex5.tex}
+		\includegraphics[keepaspectratio,width=\textwidth,angle=0]{images/ClassDiagram4.jpg}\\
+		This is a view inheritance example, because we have a student that has two categories of specialization of students - we can either consider them by language they speak or by the course they are taking.
+		Language and Course are then the classification criteria. We decided to add the additional abstraction level to increase the readability of the situation.
 	\section{Assignment:}
+		\input{q5/ex5.tex}
 	\section{Assignment:}
 	\section{}
 	\input{ex7.tex}
