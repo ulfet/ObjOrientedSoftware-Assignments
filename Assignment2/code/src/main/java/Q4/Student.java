@@ -2,25 +2,25 @@ package Q4;
 
 public class Student
 {
-    String uni = ""; // initially unknown
-    int id = 0; // initially no id
+    private String uni = ""; // initially unknown
+    private int id = 0; // initially no id
 
-    int getIdentifier()
+    public int getIdentifier()
     {
         return id;
     }
 
-    void setIdentifier(int i)
+    public void setIdentifier(int i)
     {
         this.id = i;
     }
 
-    String getUni()
+    public String getUni()
     {
         return uni;
     }
 
-    void setUni(String u)
+    public void setUni(String u)
     {
         this.uni = u;
     }

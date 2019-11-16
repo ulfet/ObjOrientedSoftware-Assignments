@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test;
 
 public class StudentTest
 {
-	private English e;
-	private German g;
-	private CS c;
-	private SSE s;
+	private EnglishStudent e;
+	private GermanStudent g;
+	private CSStudent c;
+	private SSEStudent s;
 	
 	@BeforeEach
 	public void init() {
-		e = new English();
-		g = new German();
-		c = new CS();
-		s = new SSE();
+		e = new EnglishStudent();
+		g = new GermanStudent();
+		c = new CSStudent();
+		s = new SSEStudent();
 	}
 
 	@Test
@@ -92,18 +92,18 @@ public class StudentTest
 	@Test
 	public void CS()
 	{
-		c.setCourse("CS");
+		c.setCourse("CSStudent");
 		c.setGrade(1);
-		assertEquals(c.getCourse(), "CS", "Course not set.");
+		assertEquals(c.getCourse(), "CSStudent", "CourseStudent not set.");
 		assertEquals(c.getGrade(), 1, "Grade not set.");
 	}
 
 	@Test
 	public void SSE()
 	{
-		s.setCourse("SSE");
+		s.setCourse("SSEStudent");
 		s.setGrade(2);
-		assertEquals(s.getCourse(), "SSE", "Course not set.");
+		assertEquals(s.getCourse(), "SSEStudent", "CourseStudent not set.");
 		assertEquals(s.getGrade(), 2, "Grade not set.");
 	}
 
