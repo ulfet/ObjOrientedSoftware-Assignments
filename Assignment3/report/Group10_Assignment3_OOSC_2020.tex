@@ -1,0 +1,105 @@
+\documentclass[a4paper,12pt,oneside]{scrreprt}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ae,aecompl}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{ulem}
+\usepackage{cancel}
+\usepackage{float}
+\usepackage{color}
+%\usepackage{titlesec}
+\usepackage{geometry}
+\geometry{verbose,a4paper,tmargin=25mm,bmargin=25mm,lmargin=15mm,rmargin=25mm}
+%\titlelabel{\thetitle.\quad}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{paralist}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+
+\renewcommand{\rmdefault}{phv}
+\renewcommand{\sfdefault}{phv}
+
+% for splitting page into many pages vertically
+\usepackage{paracol}
+
+% our OWN imports for our use
+\usepackage{listings}
+\lstdefinestyle{ourJavaStyle}{
+	language=Java,
+	%numbers=left,
+	%numbersep=8pt,
+	stepnumber=1,
+	tabsize=2,
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\ttfamily\scriptsize,
+	keywordstyle=\color{blue}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{green}\ttfamily,
+	breaklines=true
+}
+
+\newcommand*{\sourcepath}{../code/src/main/java}
+\newcommand*{\testpath}{../code/src/test/java}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+%\titleformat{\subsection}
+%{\normalfont\fontfamily{phv}\fontsize{14}{17}\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+	
+	\begin{tabular}{ccc}
+		\begin{large} \textbf{Prof. Lichter} \end{large} &
+		
+		\begin{minipage}[H]{3.5cm}
+			\centering
+			\begin{large} OOSC \end{large} \\
+			\begin{large} WS 2019/2020 \end{large}
+		\end{minipage} &
+		
+		\begin{minipage}[H]{4cm}
+			\includegraphics[keepaspectratio,width=\textwidth,angle=0]{images/swc.png}
+		\end{minipage} \\
+		Andreas Steffens, Konrad F\"ogen &  &  \\
+		& \begin{huge} \textbf{Submission 3} \end{huge}&  \\
+		& oosc@swc.rwth-aachen.de &  \\
+		& & \\
+		% Hier drunter muessen die Daten noch angepasst werden
+		Issued: 18.11.2019 &
+		Submission: 02.12.2019 &
+		Discussion: 05.12.2019 \\
+	\end{tabular}
+	\newline \newline \newline
+	\centering
+	Submitted by Group 10
+	
+	\begin{tabular}{ll}
+		Dominik Bittner, & 369202 \\
+		Ulfet Cetin, & 391819\\
+		Philipp Hochmann, & 356148 \\
+		Anar Orujov, & 391825\\
+		Ada Slupczynski, & 384147\\
+		(sorted on lastname basis)
+	\end{tabular}
+    
+	\setcounter{chapter}{3} % Aktuelles Assigment
+	\section{Design Patterns applied:}
+	\subsection{A\mbox{)}}
+	\subsubsection{a.}
+	\begin{enumerate}
+		\item[\textbf{Adapter}] is used by the interface Handle. Handles are used to manipulate figures into changing. They also keep informations on the changes. It is one of the structural patterns, which works as the cable adapters - it acts as a wrapper around an interface allowing it to work with another previously incompatible one.
+		\item[\textbf{Decorator}] is one of the structural patterns. JHotDraw has DecoratorFigure, which can be used to decorate other figures. Decorators dynamically add behaviour to existing methods.
+		\item[\textbf{Factory Method}] is one of the creational patterns used to solve the problem of creating objects without having to provide their class. JHotDraw uses the Factory Method pattern in the class DrawApplication to localise menu creation into separate methods.
+		\item[\textbf{Observer}] design pattern is used in JHotDraw to create connection between connected figures and the ConnectionFigure. The figures act as Observable classes while the connection acts as the Observer and sees their events. Observer is one of the behavioural patterns.
+		\item[\textbf{Prototype}] design pattern is a creational design pattern, which helps in cloning objects, without the overhead needed to create a new one. In JHotDraw ConnectionTool uses this pattern to create any kind of ConnectionFigure.
+	\end{enumerate}
+	
+    
+\end{document}
