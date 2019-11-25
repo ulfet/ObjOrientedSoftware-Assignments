@@ -1,0 +1,106 @@
+\setlength{\columnseprule}{1.5pt}
+
+\subsection{}
+	
+	\begin{paracol}{2}
+		\lstinputlisting[style=ourJavaStyle]{answers/a3_q1_samples/a.java}
+			\switchcolumn
+		
+		\textbf{would NOT compile}.\\
+		\begin{compactitem}
+			\item Java does not allow type parameter (in this case, T) to be static, as this is shared among all instances of this class.
+		
+			\item Moreover, type of the instance is T, but in line 4, instance is tried to be set to Singleton<T>.
+		\end{compactitem}
+	\end{paracol}
+	\bigskip
+	
+	\begin{paracol}{2}
+		\lstinputlisting[style=ourJavaStyle]{answers/a3_q1_samples/a_fixed.java}
+%		\lstinputlisting[style=ourJavaStyle]{answers/a3_q1_samples/aFixed.java}
+		\switchcolumn
+		
+		Fixes:
+		\begin{compactitem}
+			\item static keywords for both the variable and the function is removed (for the reasons stated above)
+			\item removed if then part, instance cannot be set to Singleton<T> object (it also cannot be set to new T(); as Java does not allow calling the constructor of generic type)
+			\item user of this class can manually check for null equality of the object
+		\end{compactitem}
+	\end{paracol}
+
+
+\subsection{}
+
+	\begin{paracol}{2}
+		\lstinputlisting[style=ourJavaStyle]{answers/a3_q1_samples/b.java}
+		\switchcolumn
+		
+		\textbf{would NOT compile}.
+		\begin{compactitem}
+			\item za cannot be assigned to zm in this form.\\
+			\textbf{reason:} assume this works, then we know that we can assign another Animal class we created (call it Squirtle) to za. The problem here is, they za and zm would be referring to same object, but how can a Monkey instance can point to a Squirtle instance? That is totally would be against the statically-typed language logic.
+		\end{compactitem}
+	\end{paracol}
+	\bigskip
+	
+	\begin{paracol}{2}
+		\lstinputlisting[style=ourJavaStyle]{answers/a3_q1_samples/b_fixed.java}
+		\switchcolumn
+		Fixes:
+		\begin{compactitem}
+			\item instead of Zoo<Animal>, we state za is of type Zoo<? extends Animal>. This way, the question mark actually would be the first subclass of Animal it would be set to.
+		\end{compactitem}
+	\end{paracol}
+
+
+\subsection{}
+
+	\begin{paracol}{2}
+		\lstinputlisting[style=ourJavaStyle]{answers/a3_q1_samples/c.java}
+		\switchcolumn
+		\textbf{would NOT compile}.
+		\begin{compactitem}
+			\item It is not given whether type T is something that can be compared. 
+		\end{compactitem}
+	\end{paracol}
+	\bigskip
+	
+	\begin{paracol}{2}
+		\lstinputlisting[style=ourJavaStyle]{answers/a3_q1_samples/c_fixed.java}
+		\switchcolumn
+		Fixes:
+		\begin{compactitem}
+			\item declare T to be something that extends Comparable, so that we can check which one is `greater`.
+		\end{compactitem}
+	\end{paracol}
+
+
+\subsection{}
+
+	\begin{paracol}{2}
+		\lstinputlisting[style=ourJavaStyle]{answers/a3_q1_samples/d.java}
+		\switchcolumn
+		Difference:
+		\begin{compactitem}
+			\item sumOfListVar1 accepts List objects that are consists of any subclass of Number class. Those classes are: Byte, Integer, Double, Short, Float, Long. Also, it works with Number class itself too.
+			
+			\item sumOfListVar2 only accepts List<Number> explicitly.
+			
+			\item see the example for better explanation.
+		\end{compactitem}
+	\end{paracol}
+	\bigskip
+	
+	\begin{paracol}{2}
+		\lstinputlisting[style=ourJavaStyle]{answers/a3_q1_samples/d_fixed.java}
+		\switchcolumn
+		Difference:
+		\begin{compactitem}
+			\item Note that those two commented lines are commented intentionally. Uncommented, they cause compilation error.
+			
+			\item One can observe the reasons stated above and see why it works this way.
+		\end{compactitem}
+	\end{paracol}
+
+
+

@@ -1,3 +1,4 @@
+
 \documentclass[a4paper,12pt,oneside]{scrreprt}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
@@ -15,8 +16,8 @@
 \usepackage{color}
 %\usepackage{titlesec}
 \usepackage{geometry}
-\geometry{verbose,a4paper,tmargin=25mm,bmargin=25mm,lmargin=15mm,rmargin=25mm}
-%\titlelabel{\thetitle.\quad}
+\geometry{verbose,a4paper,tmargin=25mm,bmargin=25mm,lmargin=15mm,rmargin=16mm}
+
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{paralist}
@@ -28,12 +29,14 @@
 
 % for splitting page into many pages vertically
 \usepackage{paracol}
+\usepackage{url}
 
 % our OWN imports for our use
 \usepackage{listings}
 \lstdefinestyle{ourJavaStyle}{
 	language=Java,
-	%numbers=left,
+
+	numbers=left,
 	%numbersep=8pt,
 	stepnumber=1,
 	tabsize=2,
@@ -49,50 +52,55 @@
 \newcommand*{\sourcepath}{../code/src/main/java}
 \newcommand*{\testpath}{../code/src/test/java}
 
+\setcounter{chapter}{3} % Aktuelles Assigment
+
+% naming convention for LaTeX report
+% subsub/sub/section naming: 
+%		chapter: number (unchanged)
+%		section: number (unchanged)
+%		subsect: letter
+%		subsubs: letter
 \renewcommand{\thesubsection}{\thesection.\alph{subsection}}
-%\titleformat{\subsection}
-%{\normalfont\fontfamily{phv}\fontsize{14}{17}\bfseries}{\thesubsection}{1em}{}
+\setcounter{secnumdepth}{3}
+\renewcommand{\thesubsubsection}{\thesubsection.\alph{subsubsection}}
+
+%\usepackage[magyar]{babel}
+
+\makeatletter
+\expandafter\let\csname active@char\string?\endcsname\relax
+\expandafter\let\csname active@char\string!\endcsname\relax
+\expandafter\let\csname active@char\string:\endcsname\relax
+
+
+\initiate@active@char{?}
+\initiate@active@char{!}
+\initiate@active@char{:}
+\makeatother
 
 \begin{document}
 	
-	\begin{tabular}{ccc}
-		\begin{large} \textbf{Prof. Lichter} \end{large} &
-		
-		\begin{minipage}[H]{3.5cm}
-			\centering
-			\begin{large} OOSC \end{large} \\
-			\begin{large} WS 2019/2020 \end{large}
-		\end{minipage} &
-		
-		\begin{minipage}[H]{4cm}
-			\includegraphics[keepaspectratio,width=\textwidth,angle=0]{images/swc.png}
-		\end{minipage} \\
-		Andreas Steffens, Konrad F\"ogen &  &  \\
-		& \begin{huge} \textbf{Submission 3} \end{huge}&  \\
-		& oosc@swc.rwth-aachen.de &  \\
-		& & \\
-		% Hier drunter muessen die Daten noch angepasst werden
-		Issued: 18.11.2019 &
-		Submission: 02.12.2019 &
-		Discussion: 05.12.2019 \\
-	\end{tabular}
-	\newline \newline \newline
-	\centering
-	Submitted by Group 10
+	\input{answers/groupheader.tex}
+   
+	\section{Assignment:}
+		\input{answers/a3_q1.tex}
 	
-	\begin{tabular}{ll}
-		Dominik Bittner, & 369202 \\
-		Ulfet Cetin, & 391819\\
-		Philipp Hochmann, & 356148 \\
-		Anar Orujov, & 391825\\
-		Ada Slupczynski, & 384147\\
-		(sorted on lastname basis)
-	\end{tabular}
     
-	\setcounter{chapter}{3} % Aktuelles Assigment
-	\section{Design Patterns applied:}
-	\subsection{A\mbox{)}}
-	\subsubsection{a.}
-	\input{ex2aa.tex}
-    
+	\section{Assignment:}
+		\subsection{} % subsection a
+		
+			\subsubsection{}
+				\input{answers/a3_q2_a_a.tex}
+        
+%         \setcounter{chapter}{3} % Aktuelles Assigment
+%         \section{Design Patterns applied:}
+%         \subsection{A\mbox{)}}
+%         \subsubsection{a.}
+%         \input{ex2aa.tex}
+			
+			\subsubsection{}
+			\input{answers/a3_q2_a_b.tex}
+			
+		\subsection{} % subsection b
+			\input{answers/a3_q2_b.tex}
+
 \end{document}
