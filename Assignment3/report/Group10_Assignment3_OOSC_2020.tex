@@ -1,4 +1,5 @@
-\documentclass[a4paper,10pt,oneside]{scrreprt}
+
+\documentclass[a4paper,12pt,oneside]{scrreprt}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{ae,aecompl}
@@ -28,13 +29,13 @@
 
 % for splitting page into many pages vertically
 \usepackage{paracol}
-
 \usepackage{url}
 
 % our OWN imports for our use
 \usepackage{listings}
 \lstdefinestyle{ourJavaStyle}{
 	language=Java,
+
 	numbers=left,
 	%numbersep=8pt,
 	stepnumber=1,
@@ -50,7 +51,6 @@
 
 \newcommand*{\sourcepath}{../code/src/main/java}
 \newcommand*{\testpath}{../code/src/test/java}
-
 
 \setcounter{chapter}{3} % Aktuelles Assigment
 
@@ -90,12 +90,17 @@
 		
 			\subsubsection{}
 				\input{answers/a3_q2_a_a.tex}
+        
+%         \setcounter{chapter}{3} % Aktuelles Assigment
+%         \section{Design Patterns applied:}
+%         \subsection{A\mbox{)}}
+%         \subsubsection{a.}
+%         \input{ex2aa.tex}
 			
 			\subsubsection{}
 			\input{answers/a3_q2_a_b.tex}
 			
 		\subsection{} % subsection b
 			\input{answers/a3_q2_b.tex}
-		
- 
+
 \end{document}
