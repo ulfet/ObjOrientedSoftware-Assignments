@@ -16,7 +16,6 @@ public class FlipApplicationModel extends DrawApplicationModel {
     private static final long serialVersionUID = 1L;
 
     public FlipApplicationModel() {
-
     }
 
     @Override
@@ -34,8 +33,8 @@ public class FlipApplicationModel extends DrawApplicationModel {
 
         JToolBar tb = new JToolBar();
 
-        JToggleButton t = new JToggleButton("Flip");
-        tb.add(t);
+        tb.add(new VerticalFlipAction(editor)).setFocusable(false);
+        tb.add(new HorizontalFlipAction(editor)).setFocusable(false);
 
         tb.setName("Flip-Toolbar");
         list.add(tb);
