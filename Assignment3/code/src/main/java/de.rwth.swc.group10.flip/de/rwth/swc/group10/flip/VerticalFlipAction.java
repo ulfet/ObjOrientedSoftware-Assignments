@@ -36,21 +36,19 @@ public class VerticalFlipAction extends AbstractSelectedAction {
     public void actionPerformed(ActionEvent actionEvent) {
         // Only perform the action, if there is something selected
         if (!getView().getSelectedFigures().isEmpty()) {
-            // Create the transformation
-            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+
 
             // Iterate over all selected figures
             for (Figure f : getView().getSelectedFigures()) {
                 // Only transform the figure, if it is possible
                 if (f.isTransformable()) {
-                    f.willChange();
-
-                    System.out.println(f.getStartPoint());
-                    System.out.println(f.getEndPoint());
-
                     // TODO: This does not mirror the figure!
-                    tx.translate(2 * f.getEndPoint().getX(), 0);
+                    // Create the transformation
+                    AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+                    // Move to the right location
+                    tx.translate(-2 * (f.getStartPoint().getX() + f.getBounds().getWidth()), 0);
 
+                    f.willChange();
                     f.transform(tx);
                     f.changed();
 

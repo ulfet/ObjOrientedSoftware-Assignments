@@ -36,21 +36,19 @@ public class HorizontalFlipAction extends AbstractSelectedAction {
     public void actionPerformed(ActionEvent actionEvent) {
         // Only perform the action, if there is something selected
         if (!getView().getSelectedFigures().isEmpty()) {
-            // Create the transformation
-            AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
-
             // Iterate over all selected figures
             for (Figure f : getView().getSelectedFigures()) {
                 // Only transform the figure, if it is possible
                 if (f.isTransformable()) {
-                    f.willChange();
-
-                    System.out.println(f.getStartPoint());
-                    System.out.println(f.getEndPoint());
-
                     // TODO: This does not mirror the figure!
-                    tx.translate(0, 2 * f.getEndPoint().getY() * -1);
+                    // Create the transformation
+                    AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
+                    System.out.println(tx.getType()); // <- 64 = Flip
+                    // Move to the right location
+                    tx.translate(0, -2 * (f.getStartPoint().getY() + f.getBounds().getHeight()));
+                    System.out.println(tx.getType()); // 64 = Flip + 1 = Translation
 
+                    f.willChange();
                     f.transform(tx);
                     f.changed();
 
