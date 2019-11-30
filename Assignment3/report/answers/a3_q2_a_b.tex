@@ -1,0 +1,21 @@
+%Adapter, Decorator, Factory, Observer, Prototype
+
+\begin{enumerate}
+    \item[\textbf{Single Responsibility}]
+        Factory methods support the Single Responsibility principle, because they allow for separate methods to create different kinds of objects. Each of this methods is only responsible for one class. Without this pattern, either the caller needed to do this, or a single constructor (which makes distinguished classes impossible because there would be only a single constructor).
+
+    \item[\textbf{Open-Closed Principle}]
+        Factory methods support the Open-Closed Principle, because they are open to extension by adding new classes the factory methods can instantiate from. Algorithms or behavior of old classes is unchanged by this.
+
+    \item[\textbf{Separation of Concerns}]
+        The observer pattern supports the Single Responsibility principle by allowing for a cascade of state-changes at different places.
+        Each single class might not be aware of features that are implemented by observing its state (and it shouldn't be), thus it is not its concern to implement them.
+
+    \item[\textbf{Property: composable}]
+        An adapter makes a previously not composable software unit composable.
+        Furthermore, decorators may be used to dynamically add features to it.
+
+    \item[\textbf{Property: local}]
+        The patterns mentioned as supporting the Single Responsibility Principle and Separation of Concerns both support developing units of software that are only affected by a small number of problem specifications. Thus, it is unlikely, that a lot of units need to be adapted, when a problem specification changes. Take the observer pattern as an example: If the class itself needed to implement all reactions that are triggered by its change of state, it needed to be modified each time such a reaction is affected by a change of problem specification.
+
+\end{enumerate}
