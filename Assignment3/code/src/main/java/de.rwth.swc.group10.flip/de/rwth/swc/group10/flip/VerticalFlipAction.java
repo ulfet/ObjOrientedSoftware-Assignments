@@ -1,5 +1,6 @@
 package de.rwth.swc.group10.flip;
 
+import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.DrawLabels;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.Figure;
@@ -42,12 +43,21 @@ public class VerticalFlipAction extends AbstractSelectedAction {
             for (Figure f : getView().getSelectedFigures()) {
                 // Only transform the figure, if it is possible
                 if (f.isTransformable()) {
-                    // TODO: This does not mirror the figure!
                     // Create the transformation
                     AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
                     // Move to the right location
                     tx.translate(-2 * (f.getStartPoint().getX() + f.getBounds().getWidth()), 0);
 
+//                    tx.translate(0, -getEditor().getActiveView().getComponent().getHeight());
+
+                    switch (f.get(AttributeKeys.ORIENTATION)){
+                        case WEST: f.set(AttributeKeys.ORIENTATION, AttributeKeys.Orientation.EAST); break;
+                        case EAST: f.set(AttributeKeys.ORIENTATION, AttributeKeys.Orientation.WEST); break;
+                        case NORTH_WEST: f.set(AttributeKeys.ORIENTATION, AttributeKeys.Orientation.NORTH_EAST); break;
+                        case NORTH_EAST: f.set(AttributeKeys.ORIENTATION, AttributeKeys.Orientation.NORTH_WEST); break;
+                        case SOUTH_WEST: f.set(AttributeKeys.ORIENTATION, AttributeKeys.Orientation.SOUTH_EAST); break;
+                        case SOUTH_EAST: f.set(AttributeKeys.ORIENTATION, AttributeKeys.Orientation.SOUTH_WEST); break;
+                    }
                     f.willChange();
                     f.transform(tx);
                     f.changed();
@@ -59,4 +69,6 @@ public class VerticalFlipAction extends AbstractSelectedAction {
             }
         }
     }
+
+
 }

@@ -1,5 +1,6 @@
 package de.rwth.swc.group10.flip;
 
+import org.jhotdraw.draw.AttributeKeys;
 import org.jhotdraw.draw.DrawLabels;
 import org.jhotdraw.draw.DrawingEditor;
 import org.jhotdraw.draw.Figure;
@@ -40,13 +41,22 @@ public class HorizontalFlipAction extends AbstractSelectedAction {
             for (Figure f : getView().getSelectedFigures()) {
                 // Only transform the figure, if it is possible
                 if (f.isTransformable()) {
-                    // TODO: This does not mirror the figure!
                     // Create the transformation
                     AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
                     System.out.println(tx.getType()); // <- 64 = Flip
-                    // Move to the right location
+                    // Move to the down location
                     tx.translate(0, -2 * (f.getStartPoint().getY() + f.getBounds().getHeight()));
+                    // tx.translate(0, -f.getBounds().getHeight());
                     System.out.println(tx.getType()); // 64 = Flip + 1 = Translation
+
+                    switch (f.get(AttributeKeys.ORIENTATION)){
+                        case NORTH: f.set(AttributeKeys.ORIENTATION, AttributeKeys.Orientation.SOUTH); break;
+                        case SOUTH: f.set(AttributeKeys.ORIENTATION, AttributeKeys.Orientation.NORTH); break;
+                        case NORTH_WEST: f.set(AttributeKeys.ORIENTATION, AttributeKeys.Orientation.SOUTH_WEST); break;
+                        case NORTH_EAST: f.set(AttributeKeys.ORIENTATION, AttributeKeys.Orientation.SOUTH_EAST); break;
+                        case SOUTH_WEST: f.set(AttributeKeys.ORIENTATION, AttributeKeys.Orientation.NORTH_WEST); break;
+                        case SOUTH_EAST: f.set(AttributeKeys.ORIENTATION, AttributeKeys.Orientation.NORTH_EAST); break;
+                    }
 
                     f.willChange();
                     f.transform(tx);
