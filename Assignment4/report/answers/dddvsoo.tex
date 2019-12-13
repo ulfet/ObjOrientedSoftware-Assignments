@@ -3,5 +3,29 @@
 		\subsection{Discuss the challenges you faced while identifying the domain concepts,
 			components, classes, categories and also while designing the domain model.}
 		
+		It was pretty straightforward to identify the core domain and the two support domains, as the supporting domains where already distinguished from the basic concept by the text of the exercise.
+		As for the concepts within a bounded domain, one had to \textit{free} himself from technical thinking before, as it is of no importance at this stage how the data structures and relationships can be implemented.
+		As an example, Floorplan and Placement are not directly connected within the Core Domain, albeit a placement procedure would be highly connected to the Floorplan.
+		As a second example, static elements like Wall, Door and Window are not connected to placement, albeit there would be nearly no conceptually difference between placing a Door or a Chair, besides a difference in constraints: A door must be placed within a wall, while a chair must not.
+		A second challenge was not to interleave the concepts too much.
+		Regarding identifying the actual concepts, it was not that difficult because of the Noun-Verb analysis beforehand.
+		Also, the specification in the exercise of the software to be designed was pretty clear about that.
+		\\ \ \\
+		To design the corresponding classes, their attributes and relationships was not that easy, as a lot more details must be thought of that lead to different ways of designing the system.
+		Also, all three domains had to be incorporated into it.
+		The most difficult part of the OO Model was the Core Domain.
+		We tried to identify different patterns to come to a reasonably robust model, for example Furniture is modeled as a Flyweight as the position is stored in the Floorplan and not the Furniture itself.
+		An additional difficulty was distinguishing between InWallElements and Furniture.
+		As for the Domain Model, they are clearly different things sharing nothing besides being present within a Floorplan.
+		At first, we thought of letting both classes inherit from a common base class, but later opted against it, as it would lead to additional complexity computing constraints.
+
 		\subsection{Discuss the advantages or disadvantages of using DDD and OO for modelling
 			the domain.}
+
+		The advantage of DDD in an early design stage is structuring the demands in a way that makes it possible to put each concept into context of the whole application.
+		It models the application as it is seen from the perspective of and educated user, interacting with it.
+		Is it is important to do this without getting too technical in an early stage, as this could lead to work being wasted as early OO Concepts could be \textit{built on sand}.
+		In later design stages, DDD simplifies too much.
+		Some concepts become classes, some are created by a combination of classes, sometimes multiple concepts even can be implemented by a single base class and derived classes with very little extensions.
+		Developing an application too near to the DDD, without applying OO as it could be, leads to unmaintainable, duplicated code that does not take advantage of design patterns.
+		To summarise: Both concepts should be applied at the design stages they belong to, both taking advantage from each other.
