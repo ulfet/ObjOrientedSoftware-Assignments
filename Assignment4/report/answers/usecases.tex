@@ -411,7 +411,7 @@
 				\end{tabularx}
 				}
 			\end{table}
-		
+
 			\clearpage
 		
 			Use Case \#7:
@@ -419,7 +419,7 @@
 				\scalebox{1.0}{
 				\begin{tabularx}{\textwidth}{|l|X|}
 					\hline
-					Title &\\
+					Title & SSO Login\\
 					\hline
 					Primary actor& user\\
 					\hline
@@ -427,16 +427,15 @@
 					actor(s)& \\
 					
 					\hline
-					Goal&\\
+					Goal& to allow users login with their respectable service accounts\\
 					\hline
-					Short description& \\
+					Short description& for ease of use, users should be allowed to login to our system using their respectable online accounts such as Facebook and Google accounts \\
 					\hline
-					Trigger& \\
+					Trigger& click on the buttons such as "Login with Facebook" and ""Login with Google\\
 					\hline
 					Preconditions&  
 					\begin{tabular}[l]{@{}c@{}}
-						1) \\
-						2) 
+						None
 					\end{tabular}
 					\\
 					\hline
@@ -444,23 +443,25 @@
 					\hline
 					Main Flow& 
 					\begin{tabular}[x]{@{}l@{}}
-						1) \\
-						2) \\
-						3) \\
-						4) \\
-						5) \\
-						6) 
+						1) user navigates to the login page\\
+						2) instead of creating a new account from scratch, user selects one of two buttons\\
+						3) in case of Google, we call the Google single-sign-on webpage\\
+						4) user fills in her details\\
+						5a) Google passes a token to our server. \\
+						6) User is both signed up and signed in at the same time.\\
+						7) User client is redirected to her home page of our website.
 					\end{tabular}
 					\\
 					\hline
-					Additional information & \\
+					Additional information & There exists deviations for Facebook login, but just the service provider name changes, all the steps are the same. \\
 					\hline
 					Deviation Flows & \\
 					\hline
 					Deviation Flow 1 & 
 					\begin{tabular}[x]{@{}l@{}}
-						1)\\
-						2)\\
+						(previous steps same as usual)\\
+						5b) User fails to login, so Google passes a message saying the login has failed.\\
+						6) User is informed that login is failed, so she can try again.\\
 						
 					\end{tabular}\\
 					
@@ -470,30 +471,30 @@
 				\end{tabularx}
 				}
 			\end{table}
-		
+
 			Use Case \#8:
 			\begin{table}[H]
 				\scalebox{1.0}{
 				\begin{tabularx}{\textwidth}{|l|X|}
 					\hline
-					Title &\\
+					Title & commenting on contents\\
 					\hline
 					Primary actor& user\\
 					\hline
-					Secondary& none\\
+					Secondary& moderator(s)\\
 					actor(s)& \\
 					
 					\hline
-					Goal&\\
+					Goal& to enable user to comment on the projects (floorplans and furnitures)\\
 					\hline
-					Short description& \\
+					Short description& as one requirement in the assignment body dictates, the users should be allowed to comment on each others' projects.\\
 					\hline
-					Trigger& \\
+					Trigger& clicking on the button "Send Comment" \\
 					\hline
 					Preconditions&  
-					\begin{tabular}[l]{@{}c@{}}
-						1) \\
-						2) 
+					\begin{tabular}[l]{@{}l@{}}
+						1) text field of the comment should be not empty.\\
+						2) text field should not contain any banned words (offensive, racist, etc.)
 					\end{tabular}
 					\\
 					\hline
@@ -501,12 +502,13 @@
 					\hline
 					Main Flow& 
 					\begin{tabular}[x]{@{}l@{}}
-						1) \\
-						2) \\
-						3) \\
-						4) \\
-						5) \\
-						6) 
+						1) user navigates to a project page.\\
+						2) user fills in the text field.\\
+						3) user clicks "Send Comment" button.\\
+						4) the comment is sent to the application server via POST command.\\
+						5) the application server checks for banned words.\\
+						6a) if it does not contain any banned words, it is stored for approval of a moderator.\\
+						7a) after moderation is done, and approval is given, the post is made visible on the said project. 
 					\end{tabular}
 					\\
 					\hline
@@ -516,8 +518,16 @@
 					\hline
 					Deviation Flow 1 & 
 					\begin{tabular}[x]{@{}l@{}}
-						1)\\
-						2)\\
+						6b) if it does contain at least one banned words, it is directly discarded,\\
+						and user is informed about the situation.\\
+						
+					\end{tabular}\\
+					
+					\hline
+					Deviation Flow 2 & 
+					\begin{tabular}[x]{@{}l@{}}
+						7b) if it does not granted the approval of a moderator, it is deleted,\\
+						and user is informed about the situation.\\
 						
 					\end{tabular}\\
 					
@@ -535,24 +545,23 @@
 				\scalebox{1.0}{
 				\begin{tabularx}{\textwidth}{|l|X|}
 					\hline
-					Title &\\
+					Title & moderation of contents\\
 					\hline
-					Primary actor& user\\
+					Primary actor& moderator(s)\\
 					\hline
 					Secondary& none\\
 					actor(s)& \\
 					
 					\hline
-					Goal&\\
+					Goal& to not allow any illegal or offensive content to be stored on the service\\
 					\hline
-					Short description& \\
+					Short description& to be lawful, and to not get into trouble with copyrights and patents, the user-created content has to be inspected.\\
 					\hline
-					Trigger& \\
+					Trigger& a moderator clicking on an item that lies in the "User Content Waiting for Approval" page\\
 					\hline
 					Preconditions&  
 					\begin{tabular}[l]{@{}c@{}}
-						1) \\
-						2) 
+						None 
 					\end{tabular}
 					\\
 					\hline
@@ -560,12 +569,13 @@
 					\hline
 					Main Flow& 
 					\begin{tabular}[x]{@{}l@{}}
-						1) \\
-						2) \\
-						3) \\
-						4) \\
-						5) \\
-						6) 
+						1) a moderator navigates to the "User Content Waiting for Approval" page\\
+						2) moderator clicks on an item, be it a comment or a user-created content\\
+						3) moderator goes over the item, and based on her decision, click the respective\\
+						"Accept" or "Reject" button.\\
+						4a) in case of accept, the content is made visible to all the users. \\
+						5) the user is notified about the approval, stating that the content is approved and \\
+						visible to all.\\
 					\end{tabular}
 					\\
 					\hline
@@ -575,8 +585,8 @@
 					\hline
 					Deviation Flow 1 & 
 					\begin{tabular}[x]{@{}l@{}}
-						1)\\
-						2)\\
+						4b) in case of reject, the content is deleted from the server.\\
+						5) the user is notified about the rejection, and the reason why.\\
 						
 					\end{tabular}\\
 					
@@ -587,12 +597,16 @@
 				}
 			\end{table}
 		
+					\noindent Case \#10:\\
+		(user, design)
+		users should be allowed to rotate and move furnitures inside a floorplan\\
+		
 			Use Case \#10:
 			\begin{table}[H]
 				\scalebox{1.0}{
 				\begin{tabularx}{\textwidth}{|l|X|}
 					\hline
-					Title &\\
+					Title & arrangement functionality of furnitures\\
 					\hline
 					Primary actor& user\\
 					\hline
@@ -600,16 +614,15 @@
 					actor(s)& \\
 					
 					\hline
-					Goal&\\
+					Goal& to allow users to arrange furnitures on a floorplan as their heart desire\\
 					\hline
-					Short description& \\
+					Short description& user should be able to rotate and move around the furnitures using our service.\\
 					\hline
-					Trigger& \\
+					Trigger& a click on a furniture in the floorplan view\\
 					\hline
 					Preconditions&  
 					\begin{tabular}[l]{@{}c@{}}
-						1) \\
-						2) 
+						None.
 					\end{tabular}
 					\\
 					\hline
@@ -617,25 +630,20 @@
 					\hline
 					Main Flow& 
 					\begin{tabular}[x]{@{}l@{}}
-						1) \\
-						2) \\
-						3) \\
-						4) \\
-						5) \\
-						6) 
+						1) user navigates to a project of hers.\\
+						2) user clicks on a furniture\\
+						3) a menu appears with affordances such as rotation and move\\
+						4) user moves and rotates the furniture around\\
+						5) after user finishes moving the said furniture, user clicks on the "Finish" button.\\
+						6) the new position and rotation of the furniture is sent to the application server,\\
+						 to be checked for constraints (the rest is functionality use case \#6).
 					\end{tabular}
 					\\
 					\hline
 					Additional information & \\
 					\hline
-					Deviation Flows & \\
+					Deviation Flows & None\\
 					\hline
-					Deviation Flow 1 & 
-					\begin{tabular}[x]{@{}l@{}}
-						1)\\
-						2)\\
-						
-					\end{tabular}\\
 					
 					\hline
 					Additional Information& \\
