@@ -126,6 +126,11 @@
         </java>
     </target>
 
+    <target name="run-group10" depends="init">
+        <java module="de.rwth.swc.group10" modulepath="${build}/modules" fork="true">
+        </java>
+    </target>
+
     <target name="jar" depends="init,compile,do-jar">
     </target>
     <target name="do-jar" depends="init">
@@ -140,6 +145,7 @@
         <modular-jar module="org.jhotdraw7.samples.svg" mainclass="org.jhotdraw.samples.svg.Main"/>
         <modular-jar module="org.jhotdraw7.samples.teddy" mainclass="org.jhotdraw.samples.teddy.Main"/>
         <modular-jar module="net.n3.nanoxml"/>
+        <modular-jar module="de.rwth.swc.group10" mainclass="de.rwth.swc.group10.FurnitureOrganizer.Main" />
     </target>
 
     <macrodef name="modular-bundle">
