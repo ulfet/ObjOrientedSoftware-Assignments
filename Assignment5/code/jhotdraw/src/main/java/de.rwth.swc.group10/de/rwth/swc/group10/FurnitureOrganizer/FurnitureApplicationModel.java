@@ -11,7 +11,7 @@ import org.jhotdraw.samples.draw.DrawView;
 import javax.swing.*;
 import java.util.List;
 
-public class FlipApplicationModel extends DrawApplicationModel {
+public class FurnitureApplicationModel extends DrawApplicationModel {
     private static final long serialVersionUID = 1L;
 
     @Override
