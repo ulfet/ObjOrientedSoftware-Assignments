@@ -18,7 +18,7 @@ public class Main {
         }
 
         // Create own model
-        FlipApplicationModel model = new FlipApplicationModel();
+        FurnitureApplicationModel model = new FurnitureApplicationModel();
         model.setName("Group 10 - Furnisher");
 
         // Set view to DrawView of the JHotDraw sample
