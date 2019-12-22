@@ -18,7 +18,7 @@ public class Main {
         }
 
         // Create own model
-        FurnitureApplicationModel model = new FurnitureApplicationModel();
+        FurnitureApplicationModelBetter model = new FurnitureApplicationModelBetter();
         model.setName("Group 10 - Furnisher");
 
         // Set view to DrawView of the JHotDraw sample

@@ -2,31 +2,51 @@ package de.rwth.swc.group10.FurnitureOrganizer.actions;
 
 import org.jhotdraw.draw.DrawLabels;
 import org.jhotdraw.draw.DrawingEditor;
-import org.jhotdraw.draw.action.AbstractSelectedAction;
+import org.jhotdraw.draw.TextAreaFigure;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 import java.awt.event.ActionEvent;
+import java.awt.geom.Rectangle2D;
 
-public class PutStove extends AbstractSelectedAction {
+import static org.jhotdraw.draw.AttributeKeys.TEXT;
+
+public class PutStove extends TextAreaFigure {
     public static final String ID = "furnisher.put.stove";
+    public final String furnitureType = "Stove";
 
-    /**
-     * Creates an action which acts on the selected figures on the current view
-     * of the specified editor.
-     *
-     * @param editor
-     */
-    public PutStove(DrawingEditor editor) {
-        super(editor);
+    public static int counter = 0;
 
-        // set text and image
-        ResourceBundleUtil labels = DrawLabels.getLabels();
-        System.out.println(labels);
-        labels.configureAction(this, ID);
+    public PutStove() {
+        this(  Integer.toString(getCounter())     );
+        System.out.println("PutStove constructor called");
+        setFontSize(10);
+    }
+
+    public static void incrementCounter() {
+        PutStove.counter += 1;
+    }
+
+    public static int getCounter() {
+        return PutStove.counter;
+    }
+
+    public PutStove(String text) {
+        setText(text);
     }
 
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        ;
+    public String getText() {
+        return get(TEXT);
+    }
+
+    @Override
+    public TextAreaFigure clone() {
+        incrementCounter();
+        System.out.println( furnitureType + " clone" + "Called");
+
+        PutStove that = (PutStove) super.clone();
+        that.setText(furnitureType + ":" + Integer.toString(getCounter()));
+        that.bounds = (Rectangle2D.Double) this.bounds.clone();
+        return that;
     }
 }

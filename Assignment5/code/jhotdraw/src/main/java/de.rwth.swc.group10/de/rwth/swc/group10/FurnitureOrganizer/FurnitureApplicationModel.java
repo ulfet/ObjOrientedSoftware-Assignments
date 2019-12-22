@@ -28,30 +28,30 @@ public class FurnitureApplicationModel extends DrawApplicationModel {
         List<JToolBar> list = super.createToolBars(a, pr);
 
         // Add new toolbar with Flip Buttons
-        JToolBar tb = new JToolBar();
-        tb = new JToolBar();
-        tb.setName("IO Operations - Furnisher");
-        tb.add(new IOImportImageAsFloorplan(editor)).setFocusable(false);
-        tb.add(new IOExportAsImage(editor)).setFocusable(false);
-        list.add(tb);
-
-        tb = new JToolBar();
-        tb.setName("Room Structure - Furnisher");
-        tb.add(new CreateDoor(editor)).setFocusable(false);
-        tb.add(new CreateRoom(editor)).setFocusable(false);
-        tb.add(new CreateWall(editor)).setFocusable(false);
-        tb.add(new CreateWindow(editor)).setFocusable(false);
-        list.add(tb);
-
-        tb = new JToolBar();
-        tb.setName("Furniture Addition - Furnisher");
-        tb.add(new PutChair(editor)).setFocusable(false);
-        tb.add(new PutElse(editor)).setFocusable(false);
-        tb.add(new PutFurniture(editor)).setFocusable(false);
-        tb.add(new PutPlant(editor)).setFocusable(false);
-        tb.add(new PutRefrigerator(editor)).setFocusable(false);
-        list.add(tb);
-
+//        JToolBar tb = new JToolBar();
+//        tb = new JToolBar();
+//        tb.setName("IO Operations - Furnisher");
+//        tb.add(new IOImportImageAsFloorplan(editor)).setFocusable(false);
+//        tb.add(new IOExportAsImage(editor)).setFocusable(false);
+//        list.add(tb);
+//
+//        tb = new JToolBar();
+//        tb.setName("Room Structure - Furnisher");
+//        tb.add(new CreateDoor(editor)).setFocusable(false);
+//        tb.add(new CreateRoom(editor)).setFocusable(false);
+//        tb.add(new CreateWall(editor)).setFocusable(false);
+//        tb.add(new CreateWindow(editor)).setFocusable(false);
+//        list.add(tb);
+//
+//        tb = new JToolBar();
+//        tb.setName("Furniture Addition - Furnisher");
+////        tb.add(new PutChair(editor)).setFocusable(false);
+//        tb.add(new PutElse(editor)).setFocusable(false);
+//        tb.add(new PutFurniture(editor)).setFocusable(false);
+//        tb.add(new PutPlant(editor)).setFocusable(false);
+//        tb.add(new PutRefrigerator(editor)).setFocusable(false);
+//        list.add(tb);
+//
         return list;
     }
 }
