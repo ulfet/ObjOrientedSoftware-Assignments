@@ -1,7 +1,6 @@
 package de.rwth.swc.group10.FurnitureOrganizer;
 
 import de.rwth.swc.group10.FurnitureOrganizer.actions.*;
-import de.rwth.swc.group10.FurnitureOrganizer.tools.BackgroundImageTool;
 import org.jhotdraw.annotation.Nullable;
 import org.jhotdraw.app.Application;
 import org.jhotdraw.app.View;
@@ -16,7 +15,6 @@ import org.jhotdraw.samples.draw.DrawView;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -64,22 +62,6 @@ public class FurnitureApplicationModelBetter extends DrawApplicationModel {
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new PutRefrigerator()), "furnisher.put.refrigerator", labels);
     }
 
-    private void addIOButtonsTo(JToolBar tb, DrawingEditor editor) {
-        addDefaultIOButtonsTo(tb, editor,
-                ButtonFactory.createDrawingActions(editor),
-                ButtonFactory.createSelectionActions(editor));
-    }
-
-    private void addDefaultIOButtonsTo(JToolBar tb, final DrawingEditor editor,
-                                       Collection<Action> drawingActions, Collection<Action> selectionActions) {
-        ResourceBundleUtil labels = DrawLabels.getLabels();
-
-        ButtonFactory.addSelectionToolTo(tb, editor, drawingActions, selectionActions);
-        tb.addSeparator();
-
-        ButtonFactory.addToolTo(tb, editor, new BackgroundImageTool(new ImageFigure()), "furnisher.io.background", labels);
-    }
-
     @Override
     public List<JToolBar> createToolBars(Application a, @Nullable View pr) {
         // save the editor for further usage
@@ -90,9 +72,6 @@ public class FurnitureApplicationModelBetter extends DrawApplicationModel {
         } else {
             editor = p.getEditor();
         }
-
-        ResourceBundleUtil labels = DrawLabels.getLabels();
-
         // create the default drawing toolbars
         List<JToolBar> list = super.createToolBars(a, pr);
 
@@ -106,13 +85,12 @@ public class FurnitureApplicationModelBetter extends DrawApplicationModel {
         tb.setName("FurnitureButtons - Furnisher");
         list.add(tb);
         // Add new toolbar with Flip Buttons
-
-        tb = new JToolBar();
-        tb.setName("IO Operations - Furnisher");
-        addIOButtonsTo(tb, editor);
-        //tb.add(new IOImportImageAsFloorplan(editor)).setFocusable(false);
-        tb.add(new IOExportAsImage(editor)).setFocusable(false);
-        list.add(tb);
+//
+//        tb = new JToolBar();
+//        tb.setName("IO Operations - Furnisher");
+//        tb.add(new IOImportImageAsFloorplan(editor)).setFocusable(false);
+//        tb.add(new IOExportAsImage(editor)).setFocusable(false);
+//        list.add(tb);
 //
 //        tb = new JToolBar();
 //        tb.setName("Room Structure - Furnisher");
