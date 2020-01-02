@@ -22,7 +22,7 @@ public class Main {
         model.setName("Group 10 - Furnisher");
 
         // Set view to DrawView of the JHotDraw sample
-        model.setViewFactory(DrawView::new);
+        model.setViewFactory(FurnitureOrganizerView::new);
         app.setModel(model);
         app.launch(args);
     }
