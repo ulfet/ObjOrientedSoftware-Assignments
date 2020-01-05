@@ -1,6 +1,7 @@
 package de.rwth.swc.group10.FurnitureOrganizer;
 
 import de.rwth.swc.group10.FurnitureOrganizer.actions.*;
+import de.rwth.swc.group10.FurnitureOrganizer.elements.*;
 import de.rwth.swc.group10.FurnitureOrganizer.tools.BackgroundImageTool;
 import org.jhotdraw.annotation.Nullable;
 import org.jhotdraw.app.Application;
@@ -45,9 +46,12 @@ public class FurnitureApplicationModelBetter extends DrawApplicationModel {
         ButtonFactory.addSelectionToolTo(tb, editor, drawingActions, selectionActions);
         tb.addSeparator();
 
+        GroupFigure wallGroup = new GroupFigure();
+        wallGroup.add(new Wall());
+
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new RectangleFigure()), "furnisher.create.door", labels);
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new RectangleFigure()), "furnisher.create.room", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new RectangleFigure()), "furnisher.create.wall", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(wallGroup), "furnisher.create.wall", labels);
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new RectangleFigure()), "furnisher.create.window", labels);
     }
 
