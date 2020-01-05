@@ -1,1 +1,8 @@
 \section{Implementation}
+
+\subsection{Walls, Doors, Windows}
+
+Wall, Door and Window are extending ImageFigure.
+Also, Door and Window are created by a special CreationTool named "CreateInWallElement".
+It checks that doors and windows are always placed on a wall.
+If not, it intercepts the call of the framework to mousePressed.

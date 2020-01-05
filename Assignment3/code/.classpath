@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src/main/java/de.rwth.swc.group10.flip"/>
+	<classpathentry kind="src" path="src/main/java/net.n3.nanoxml"/>
+	<classpathentry kind="src" path="src/main/java/org.jhotdraw7.application"/>
+	<classpathentry kind="src" path="src/main/java/org.jhotdraw7.draw"/>
+	<classpathentry kind="src" path="src/main/java/org.jhotdraw7.nanoxml"/>
+	<classpathentry kind="src" path="src/main/java/org.jhotdraw7.samples.draw"/>
+	<classpathentry kind="src" path="src/main/java/org.jhotdraw7.samples.misc"/>
+	<classpathentry kind="src" path="src/main/java/org.jhotdraw7.samples.net"/>
+	<classpathentry kind="src" path="src/main/java/org.jhotdraw7.samples.odg"/>
+	<classpathentry kind="src" path="src/main/java/org.jhotdraw7.samples.pert"/>
+	<classpathentry kind="src" path="src/main/java/org.jhotdraw7.samples.svg"/>
+	<classpathentry kind="src" path="src/main/java/org.jhotdraw7.samples.teddy"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -20,6 +20,8 @@ import org.jhotdraw.samples.draw.DrawApplicationModel;
 import org.jhotdraw.samples.draw.DrawView;
 import org.jhotdraw.util.ResourceBundleUtil;
 
+import actions.CreateInWallElement;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
@@ -49,10 +51,10 @@ public class FurnitureApplicationModelBetter extends DrawApplicationModel {
         GroupFigure wallGroup = new GroupFigure();
         wallGroup.add(new Wall());
 
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new RectangleFigure()), "furnisher.create.door", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreateInWallElement(editor, (Figure)new Door()), "furnisher.create.door", labels);
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new RectangleFigure()), "furnisher.create.room", labels);
         ButtonFactory.addToolTo(tb, editor, new CreationTool(wallGroup), "furnisher.create.wall", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new RectangleFigure()), "furnisher.create.window", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreateInWallElement(editor, (Figure)new MyWindow()), "furnisher.create.window", labels);
     }
 
     private void addFurnitureButtonsTo(JToolBar tb, DrawingEditor editor) {
