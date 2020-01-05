@@ -52,8 +52,8 @@ public class FurnitureApplicationModelBetter extends DrawApplicationModel {
         wallGroup.add(new Wall());
 
         ButtonFactory.addToolTo(tb, editor, new CreateInWallElement(editor, (Figure)new Door()), "furnisher.create.door", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(new RectangleFigure()), "furnisher.create.room", labels);
-        ButtonFactory.addToolTo(tb, editor, new CreationTool(wallGroup), "furnisher.create.wall", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreationTool(new Room()), "furnisher.create.room", labels);
+        ButtonFactory.addToolTo(tb, editor, new CreateInRoomElement(editor, wallGroup), "furnisher.create.wall", labels);
         ButtonFactory.addToolTo(tb, editor, new CreateInWallElement(editor, (Figure)new MyWindow()), "furnisher.create.window", labels);
     }
 
