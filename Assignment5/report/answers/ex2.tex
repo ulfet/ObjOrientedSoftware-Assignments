@@ -1,2 +1,18 @@
 \section{Components}
 
+Decide for each of the following suggestions if they are components and justify your
+answer. In the case of a good component candidate extend the description with
+Interfaces
+Interactions with other components
+Included classes or entities
+Integration with JHotDraw
+
+\subsection{SketchImporter}
+This is a good choice for a component. It is a small part of the program, which could also be used in different drawing programs. Expect of the dependency to JHotDraw it has no further dependencies and therefore is well suited for an own component.
+
+In general this component should receive an image file and import this to the given drawing but the interface looks a bit different because of the implementation with JHotDraw: The component is implemented as a \textit{Tool} and is an extension of \textit{ImageTool}. But only the \textit{creationFinished} method is overwritten. The \textit{ImageTool} already provides a functionality to import an image to the drawing. With the extension this image is set to the background and positioned to the (0,0) point. As the \textit{ImageTool}, this component also requires an \textit{ImageFigure} as constructor parameter and interact directly to the current view of this JHotDraw application.
+
+\subsection{ImageExporter}
+The ImageExporter is not a good choice for a component. The exporting feature is a general feature for a drawing application and therefore it is more clever to integrate this to the framework directly. So it could be extended by different applications for different needs, for example different file formats to export.
+
+In JHotDraw is an exporter feature already implemented. It could be provided through the \textit{ExportFileAction}. In addition to this to hot spots have to be implemented: In the \textit{ApplicationModel} the method \textit{createExportChooser} have to be overwritten to show all available formats in the export dialog and the method \textit{write} in the \textit{View} have to be changed to save the drawing in the selected format.
