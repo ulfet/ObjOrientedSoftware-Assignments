@@ -1,2 +1,71 @@
 \section{Components}
 
+\subsection{SketchImporter}
+	\begin{description}
+		\item[Decision] \hfill \\ Bad suggestion
+		\item[Justification] \hfill \\ It is too specific and hence not reusable. It should be ImageImporter, which would give user a choice whether it is a furniture piece or a floor plan.
+		\item[Interfaces] \hfill \\ -
+		\item[Interactions with other components] \hfill \\ -
+		\item[Included classes or entities] \hfill \\ -
+		\item[Integration with JHotDraw] \hfill \\ -
+	\end{description}
+
+\subsection{FlatModeler}
+	\begin{description}
+		\item[Decision] \hfill \\ Bad suggestion
+		\item[Justification] \hfill \\ It is very general and would basically contain the entire functionality, whereas components are supposed to be smaller and limited to a certain type of functionality (like WallModeler).
+		\item[Interfaces] \hfill \\ -
+		\item[Interactions with other components] \hfill \\ -
+		\item[Included classes or entities] \hfill \\ -
+		\item[Integration with JHotDraw] \hfill \\ -
+	\end{description}
+
+\subsection{ImageExporter}
+	\begin{description}
+		\item[Decision] \hfill \\ Good suggestion
+		\item[Justification] \hfill \\ It is small functionality part in a very defined context. One knows it is used for exporting images.
+		\item[Interfaces] \hfill \\ public URIChooser createExportChooser(Application a, @Nullable View v)
+		\item[Interactions with other components] \hfill \\ ExportFileAction
+		\item[Included classes or entities] \hfill \\ URIChooser, Application, View
+		\item[Integration with JHotDraw] \hfill \\ A button on a toolbar.
+	\end{description}
+
+\subsection{WebPublisher}
+	\begin{description}
+		\item[Decision] \hfill \\ Good component
+		\item[Justification] \hfill \\ Again, the usage of this component is clear and understandable from the name.
+		\item[Interfaces] \hfill \\ publishPlan(image, author)
+		\item[Interactions with other components] \hfill \\ -
+		\item[Included classes or entities] \hfill \\ Some communication classes, also some conversion classes needed.
+		\item[Integration with JHotDraw] \hfill \\ A button on a toolbar.
+	\end{description}
+
+\subsection{FurnitureFactory}
+	\begin{description}
+		\item[Decision] \hfill \\ Bad suggestion
+		\item[Justification] \hfill \\ Dependant on the context and hence not reusable.
+		\item[Interfaces] \hfill \\ -
+		\item[Interactions with other components] \hfill \\ -
+		\item[Included classes or entities] \hfill \\ -
+		\item[Integration with JHotDraw] \hfill \\ -
+	\end{description}
+
+\subsection{ChairTableGrouping}
+	\begin{description}
+		\item[Decision] \hfill \\ Bad suggestion
+		\item[Justification] \hfill \\ If we want to group any other types, it is not reusable as it depends on the chair and the table type.
+		\item[Interfaces] \hfill \\ -
+		\item[Interactions with other components] \hfill \\ -
+		\item[Included classes or entities] \hfill \\ -
+		\item[Integration with JHotDraw] \hfill \\ -
+	\end{description}
+
+\subsection{ConstraintValidation}
+	\begin{description}
+		\item[Decision] \hfill \\ Bad suggestion
+		\item[Justification] \hfill \\ Very general as there are different constraints for various types of furniture - one can fill the space under the table with something, which is not the case with a solid object like the drawer. Each object group should have its own constraint validation. Additionally, one should run the constraint validation after attempted placement of the object to avoid computation overhead.
+		\item[Interfaces] \hfill \\ -
+		\item[Interactions with other components] \hfill \\ -
+		\item[Included classes or entities] \hfill \\ -
+		\item[Integration with JHotDraw] \hfill \\ -
+	\end{description}
