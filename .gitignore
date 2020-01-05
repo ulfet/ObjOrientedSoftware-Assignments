@@ -28,6 +28,7 @@ hs_err_pid*
 
 # Generated PDFs
 *.pdf
+!Assignment5/report/images/*.pdf
 
 # Latex files
 *.aux
