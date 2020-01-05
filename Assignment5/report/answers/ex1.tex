@@ -1,0 +1,14 @@
+\section{Frameworks}
+	
+		\subsection{JHotDraw}
+			JHotDraw is a free Java-based white-box framework, which helps to create graphic editors. It contains various elements such as Views, Figures, control toolbars, which help in the development. As flat designing and furnishing considers placement of geometric shapes into a rectangular shape, it is a candidate to consider when writing "SWCArchitect".
+		
+		\subsection{Analysis}
+			In the JHotDraw implementation one can find components that the team could reuse in the "SWCArchitect".\\
+			One of such components would be a \textbf{Figure}. Figures are basically geometrical shapes put together to create a drawing. As a component it knows its bounds, it can have attributes identified by AttributeKey, it can be composed of other figures and can be cloned. This allows for an implementation of the furniture (for  example TextAreaFigure - see chair in the code, or ImageFigure, holding a buffored image) and walls (LineFigure or BezierFigure) drawing.\\
+			Another component to consider is the \textbf{DrawView}, which provides a view for all of JHotDraw drawings. Thanks to this component one can provide an outlook of the model to the screen.\\
+			Last, but not least one can use \textbf{DrawApplicationModel}, which provides methods allowing creation of views, menu bars and toolbars (like createToolBars override in the code).
+			
+		\subsection{Discussion}
+			We consider JHotDraw a \textbf{good choice} for this type of a project, as it allows with a little bit of additional implementation to create what was defined in the requirements of the SWCArchitect.\\
+			The existence of components such as toolbar builders or figures provides an intuitive way of using the framework to create a graphic editor concerning flat furnishing.
