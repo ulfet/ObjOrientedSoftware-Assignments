@@ -1,0 +1,15 @@
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    labels:
+      app: singledemo
+      name: singlepod
+    name: singledemo-pod
+  spec:
+    containers:
+    - name: singlepod
+      image: swcarchitect:latest
+      imagePullPolicy: IfNotPresent
+      ports:
+      - containerPort: 8080
+        protocol: TCP

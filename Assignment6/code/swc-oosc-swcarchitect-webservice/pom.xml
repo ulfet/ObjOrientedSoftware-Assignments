@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.rwth.swc.oosc</groupId>
+    <artifactId>webservice</artifactId>
+    <version>0.0.9-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>SWCArchitect Webservice</name>
+    <description>Simple Webservice</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.3.3.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jersey</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+
+        <!--
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.39</version>
+        </dependency>
+
+        -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.15.3</version>
+
+                <configuration>
+                    <dockerHost>https://10.1.2.2:2376</dockerHost>
+                    <certPath>
+                        /Users/andy/apps/cdk/components/rhel/rhel-ose/.vagrant/machines/default/vmware_fusion/docker
+                    </certPath>
+                    <apiVersion>1.21</apiVersion>
+                    <useColor>true</useColor>
+                    <verbose>true</verbose>
+                    <images>
+                        <image>
+                            <name>swcarchitect</name>
+                            <alias>swcarchitect</alias>
+                            <registry>hub.openshift.rhel-cdk.10.1.2.2.xip.io/sample-project</registry>
+                            <build>
+                                <from>java:alpine</from>
+                                <ports>
+                                    <port>8080</port>
+                                </ports>
+                                <entryPoint>
+                                    <exec>
+                                        <arg>java</arg>
+                                        <arg>-Xmx2G</arg>
+                                        <arg>-jar</arg>
+                                        <arg>-Djava.security.egd=file:/dev/urandom</arg>
+                                        <arg>${project.build.finalName}.jar</arg>
+                                    </exec>
+                                </entryPoint>
+                                <user>1000</user>
+                                <workdir>/opt/app</workdir>
+                                <assembly>
+                                    <mode>dir</mode>
+                                    <basedir>/opt/app</basedir>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <tags>
+                                    <tag>latest</tag>
+                                    <tag>${project.version}</tag>
+                                </tags>
+                                <runCmds>
+                                    <run>adduser -h /opt/app -D app</run>
+                                    <run>chown app:app /opt/app -R</run>
+                                </runCmds>
+                            </build>
+                            <run>
+                                <namingStrategy>alias</namingStrategy>
+                            </run>
+                        </image>
+                    </images>
+                    <authConfig>
+                        <useOpenShiftAuth>true</useOpenShiftAuth>
+                        <username>openshift-dev</username>
+                        <password>devel</password>
+                    </authConfig>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

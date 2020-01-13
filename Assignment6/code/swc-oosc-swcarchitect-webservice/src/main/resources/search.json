@@ -1,0 +1,7 @@
+
+{
+  "name" : "REGEX-PATTERN",
+  "location" : "PREGEX-PATTERN",
+  "date" : "YYYY-MM-dd",
+  "date_operator" : "<,>,="
+}
