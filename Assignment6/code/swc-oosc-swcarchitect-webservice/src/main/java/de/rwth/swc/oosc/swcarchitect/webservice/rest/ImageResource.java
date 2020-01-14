@@ -110,6 +110,33 @@ public class ImageResource {
     }
 
     /**
+     * Prints a image in JSON
+     *
+     * @param nr The id of the image
+     * @return The requested image
+     */
+    @RequestMapping(value = "/{nr}", params = "format=json")
+    public ResponseEntity<Image> showJsonImage(@PathVariable("nr") int nr) {
+        try {
+            // Load the path of the image
+            Path path = storageService.load(nr + ".json");
+
+            // Create an object for the stored file
+            Image image = objectMapper.readValue(path.toFile(), Image.class);
+
+            // Return the image
+            return ResponseEntity.ok()
+                    .body(image);
+        } catch (FileNotFoundException e) {
+            logger.info("no image {} found", nr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+
+    /**
      * Prints a website which contains the image
      *
      * @param nr The id of the image
