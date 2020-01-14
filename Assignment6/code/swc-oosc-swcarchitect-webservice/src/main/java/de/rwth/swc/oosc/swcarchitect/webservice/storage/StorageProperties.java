@@ -1,3 +1,8 @@
+/**
+ * file system storage service copied from
+ * https://github.com/spring-guides/gs-uploading-files/
+ */
+
 package de.rwth.swc.oosc.swcarchitect.webservice.storage;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;

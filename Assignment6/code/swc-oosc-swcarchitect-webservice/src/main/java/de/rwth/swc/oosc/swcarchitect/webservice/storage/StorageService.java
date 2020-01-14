@@ -1,7 +1,9 @@
-package de.rwth.swc.oosc.swcarchitect.webservice.storage;
+/**
+ * Slightly modified file system storage service copied from
+ * https://github.com/spring-guides/gs-uploading-files/
+ */
 
-import org.springframework.core.io.Resource;
-import org.springframework.web.multipart.MultipartFile;
+package de.rwth.swc.oosc.swcarchitect.webservice.storage;
 
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -18,8 +20,6 @@ public interface StorageService {
     Stream<Path> loadAll();
 
     Path load(String filename);
-
-    Resource loadAsResource(String filename);
 
     void deleteAll();
 
