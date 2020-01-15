@@ -1,0 +1,17 @@
+% !TEX root = ../Group10_Assignment6_OOSC_2020.tex
+
+\section{RESTful Web Services}
+\subsection{Please describe and justify your design decisions, components andarchitecture.}
+
+We decided to extend the \textit{ImageResource} to store files locally in the file system. This is done, because we didn't want an additional service like a database running with our web service. Instead of implementing the file system storage by ourselves we imported a solution shown in a file-uploading-example for Spring and modified this component slightly. After that it could be used with dependency injection directly in the \textit{ImageResource} for storing and reading files. In the future this solution can easily be changed, because of the loose coupling with the help of the \textit{StorageService} interface.
+
+As special part of our solution we decided to only allow local files, which exists on the server, for the location of the images. This is, because the web service should present uploaded files and not files from other locations. So for creating a new image a actual image file has to be created first. This is done with a POST request, which includes the file in the body, to the path \textit{/images/file}. The response will provide the location of the file via the \textit{Location} header. This can be included in the \textit{Image} class and then published with a POST request to \textit{/images}.
+
+Other possible requests to the web service:
+\begin{itemize}
+    \item GET \textit{/images}: Show a list of all stored images in the JSON format
+    \item GET \textit{/images/\{id\}?format=json}: The image in JSON format
+    \item GET \textit{/images/\{id\}?format=html}: A html representation of the image with id \{id\}.
+    \item GET \textit{/images/\{id\}?format=image}: The actual image file
+    \item GET \textit{/images/filter?filter=\{text\}}: All images which name matches \{text\}.
+\end{itemize}

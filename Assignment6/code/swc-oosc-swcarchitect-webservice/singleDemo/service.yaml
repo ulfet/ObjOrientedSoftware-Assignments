@@ -1,0 +1,14 @@
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: singledemo-service
+    labels:
+      app: singledemo
+  spec:
+    selector:
+      app: singledemo
+    ports:
+    - nodePort: 0
+      port: 8080
+      protocol: TCP
+      targetPort: 8080

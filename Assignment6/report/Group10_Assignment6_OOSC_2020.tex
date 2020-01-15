@@ -1,0 +1,87 @@
+
+\documentclass[a4paper,12pt,oneside]{scrreprt}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ae,aecompl}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{ulem}
+\usepackage{cancel}
+\usepackage{float}
+\usepackage{color}
+%\usepackage{titlesec}
+\usepackage{geometry}
+\geometry{verbose,a4paper,tmargin=25mm,bmargin=25mm,lmargin=15mm,rmargin=16mm}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{paralist}
+\usepackage{textcomp}
+\usepackage[official]{eurosym}
+
+\renewcommand{\rmdefault}{phv}
+\renewcommand{\sfdefault}{phv}
+
+% for splitting page into many pages vertically
+\usepackage{paracol}
+\usepackage{url}
+
+% our OWN imports for our use
+\usepackage{listings}
+\lstdefinestyle{ourJavaStyle}{
+	language=Java,
+	numbers=left,
+	%numbersep=8pt,
+	stepnumber=1,
+	tabsize=2,
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\ttfamily\scriptsize,
+	keywordstyle=\color{blue}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	commentstyle=\color{green}\ttfamily,
+	breaklines=true
+}
+
+\newcommand*{\sourcepath}{../code/src/main/java}
+\newcommand*{\testpath}{../code/src/test/java}
+
+\setcounter{chapter}{6} % Aktuelles Assigment
+
+% naming convention for LaTeX report
+% subsub/sub/section naming: 
+%		chapter: number (unchanged)
+%		section: number (unchanged)
+%		subsect: letter
+%		subsubs: letter
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\setcounter{secnumdepth}{3}
+\renewcommand{\thesubsubsection}{\thesubsection.\alph{subsubsection}}
+
+%\usepackage[magyar]{babel}
+
+\makeatletter
+\expandafter\let\csname active@char\string?\endcsname\relax
+\expandafter\let\csname active@char\string!\endcsname\relax
+\expandafter\let\csname active@char\string:\endcsname\relax
+
+
+\initiate@active@char{?}
+\initiate@active@char{!}
+\initiate@active@char{:}
+\makeatother
+
+\begin{document}
+	
+	\input{answers/groupheader.tex}
+	
+	\input{answers/ex1.tex}
+	
+	\input{answers/ex2.tex}
+
+\end{document}

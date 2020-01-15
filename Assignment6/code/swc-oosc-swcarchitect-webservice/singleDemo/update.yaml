@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: 2016-06-15T15:50:26Z
+  name: singledemo-service
+  namespace: sample-project
+  resourceVersion: "4110"
+  selfLink: /api/v1/namespaces/sample-project/services/singledemo-service
+  uid: e0e2be45-3310-11e6-8d47-000c29851868
+  labels:
+    app: singledemo
+spec:
+  clusterIP: 172.30.59.151
+  portalIP: 172.30.59.151
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: singledemo
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

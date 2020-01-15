@@ -1,0 +1,10 @@
+  apiVersion: v1
+  kind: Route
+  metadata:
+    name: twodemo-route
+    labels:
+      app: twodemo
+  spec:
+    to:
+      kind: Service
+      name: twodemo-service
