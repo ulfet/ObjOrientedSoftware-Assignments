@@ -2,7 +2,54 @@
 
 \section{Frameworks}
 
+\subsection{Actions Supported}
 
+\begin{itemize}
+	\item calculate flat size
+	\begin{itemize}
+		\item in the current state of SWCArchitect (that is implemented in the previous assignment), we have the 'import floorplan' function. Through that, we can get the information on the imported image, such as width and height.
+		\item however, those features of width and height are abstract, they do not map to the real-world information without extra information. Due to this nature of those features, we can either:
+		\begin{itemize}
+			\item provide flat size in pixel$^{2}$ (e.g. height * width)
+			\item we can ask for user intervention, that, at the import of floorplan, we can ask user to provide the dimensions of the flat, so we can map those real world values to the pixels. This would help us also in the other functionalities.
+		\end{itemize}
+		\item in the previous assignment, we have extended ImageTool to build our ImageImporter (for floorplan). This class' implementation can be used to implement this functionality of calculating flat size.
+	\end{itemize}
+	\bigskip
+	
+	\item occupied space of elements/free space
+	\begin{itemize}
+		\item similar to the 'calculate flat size', we can either ask for user intervention for meter$^{2}$ calculation, or even better, ask for room size once. If we have such information, then we have what is the length of each pixel in horizontal and vertical directions. With such information, we can calculate the relative size of the furnitures too.
+		\item in the same sense, we implemented furnitures by extending TextAreaFigure, and we can use this to implement the given functionality.
+	\end{itemize}
+	\bigskip
+	
+	\item validate constraints, e.g. "a room has at least three connected walls"
+	\begin{itemize}
+		\item in the previous assignment, we also implemented some of the constraints.\\
+		Citing from our own previous assignment:
+		
+		\begin{addmargin}[4em]{0em}
+			\textit{Wall, Door and Window are extending ImageFigure. Also, Door and Window are created by a special
+				CreationTool named "CreateInWallElement". It checks that doors and windows are always placed on a
+				wall. If not, it intercepts the call of the framework to mousePressed.}
+		\end{addmargin}
+		
+		\item we can use this to enforce some of the constraints. For the rest of the constraints, we would use Template-Hook approach to enable user to add more constraint by coding, if a need is deemed necessary.
+	\end{itemize}
+	
+	\item mass operations (resizing of multiple objects)
+	\begin{itemize}
+		\item multiple items can be chosen \& resized.\\
+			In order to allow grouping, such as:
+			\begin{itemize}
+				\item only group certain kind of furniture (e.g. only chairs)
+				\item group more than one kind of furniture (like the example in the previous assignment: table \& chair grouping)
+			\end{itemize}
+	
+		\item for such flexibility, we would also use one of the Template-Hook approaches, so the user-generated furniture types are also allowed to be grouped without selecting them manually.
+	\end{itemize}
+\end{itemize}
 
 \subsection{UI choice}
 
