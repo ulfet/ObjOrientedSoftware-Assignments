@@ -1,7 +1,8 @@
 % !TEX root = ../Group10_Assignment6_OOSC_2020.tex
 
 \section{RESTful Web Services}
-\subsection{Please describe and justify your design decisions, components andarchitecture.}
+\subsection{Please describe and justify your design decisions, components and
+architecture.}
 
 We decided to extend the \textit{ImageResource} to store files locally in the file system. This is done, because we didn't want an additional service like a database running with our web service. Instead of implementing the file system storage by ourselves we imported a solution shown in a file-uploading-example for Spring and modified this component slightly. After that it could be used with dependency injection directly in the \textit{ImageResource} for storing and reading files. In the future this solution can easily be changed, because of the loose coupling with the help of the \textit{StorageService} interface.
 
@@ -15,3 +16,4 @@ Other possible requests to the web service:
     \item GET \textit{/images/\{id\}?format=image}: The actual image file
     \item GET \textit{/images/filter?filter=\{text\}}: All images which name matches \{text\}.
 \end{itemize}
+
