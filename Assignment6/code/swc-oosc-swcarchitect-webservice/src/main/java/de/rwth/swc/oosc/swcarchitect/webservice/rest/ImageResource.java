@@ -104,7 +104,7 @@ public class ImageResource {
     }
     
     @RequestMapping("/owner")
-    public String ownerInfo(@RequestParam(value="name",defaultValue = "Unkown")String name)
+    public String ownerInfo(@RequestParam(value="name",defaultValue = "Unknown")String name)
     {
     	return "This Collection is owned by " + name;
     }
@@ -294,7 +294,7 @@ public class ImageResource {
      * @return The next id
      */
     private int getNextId(boolean imageClass) {
-        final int extSize = imageClass ? 5 : 3;
+        final int extSize = imageClass ? 5 : 4;
 
         // Get "max" filename
         OptionalInt opt = storageService

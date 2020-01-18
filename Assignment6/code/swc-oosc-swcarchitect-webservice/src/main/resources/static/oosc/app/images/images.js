@@ -11,7 +11,7 @@ angular.module('swcarchitect.images', ['ngRoute'])
 
 .controller('ImageCtrl', function($scope,$http) {
 
-  $http.get('http://localhost:8080/image').
+  $http.get('http://localhost:8080/imagesfull').
   success(function(data) {
     $scope.images = data;
   });

@@ -5,12 +5,14 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by andy on 14.01.16.
  */
 @JsonAutoDetect
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Image {
 
     @JsonProperty
