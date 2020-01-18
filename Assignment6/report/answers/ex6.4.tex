@@ -1,0 +1,5 @@
+% !TEX root = ../Group10_Assignment6_OOSC_2020.tex
+\subsection{Please describe and justify your design decisions, components and
+architecture.}
+
+For this part, we have extended the \textit{image.java} file in domain to completeImage.java, where we have introduced a new parameter approved which  shows the status of image whether it is approved or not. By default, every image created  is approved false. In the rest part, we  have defined the api link to approve an image by id /imagesfull/approve/{id}, so you user can approve the images by approve method of api, and then only approved images can be shown on the application side via /oosc/app/index.html/images.
