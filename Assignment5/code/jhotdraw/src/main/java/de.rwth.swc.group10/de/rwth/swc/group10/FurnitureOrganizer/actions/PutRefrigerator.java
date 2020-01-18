@@ -9,44 +9,25 @@ import java.awt.event.ActionEvent;
 import java.awt.geom.Rectangle2D;
 
 import static org.jhotdraw.draw.AttributeKeys.TEXT;
+import org.jhotdraw.draw.ImageFigure;
 
-public class PutRefrigerator extends TextAreaFigure {
-    public static final String ID = "furnisher.put.refrigerator";
-    public final String furnitureType = "Refrigerator";
+import java.io.File;
+import java.io.IOException;
 
-    public static int counter = 0;
+public class PutRefrigerator extends ImageFigure {
 
-    public PutRefrigerator() {
-        this(  Integer.toString(getCounter())     );
-        System.out.println("PutRefrigerator constructor called");
-        setFontSize(10);
-    }
+    public PutRefrigerator(){
+        super();
+        File file1 = new File("resources/refigerator.jpg");
+        System.out.println("Exists: " + file1.exists());
+        System.out.println("Can read: " + file1.canRead());
+        try {
+            loadImage(file1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    public static void incrementCounter() {
-        PutRefrigerator.counter += 1;
-    }
-
-    public static int getCounter() {
-        return PutRefrigerator.counter;
-    }
-
-    public PutRefrigerator(String text) {
-        setText(text);
-    }
-
-    @Override
-    public String getText() {
-        return get(TEXT);
-    }
-
-    @Override
-    public TextAreaFigure clone() {
-        incrementCounter();
-        System.out.println( furnitureType + " clone" + "Called");
-
-        PutRefrigerator that = (PutRefrigerator) super.clone();
-        that.setText(furnitureType + ":" + Integer.toString(getCounter()));
-        that.bounds = (Rectangle2D.Double) this.bounds.clone();
-        return that;
     }
 }
+
+

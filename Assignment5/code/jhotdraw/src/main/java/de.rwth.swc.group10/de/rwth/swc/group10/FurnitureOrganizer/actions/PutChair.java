@@ -7,6 +7,11 @@ import org.jhotdraw.util.ResourceBundleUtil;
 
 import java.awt.event.ActionEvent;
 import java.awt.geom.Rectangle2D;
+import java.awt.Color;
+import java.awt.*;
+import java.awt.Graphics;
+
+
 
 import static org.jhotdraw.draw.AttributeKeys.TEXT;
 
@@ -20,6 +25,7 @@ public class PutChair extends TextAreaFigure {
         this(  Integer.toString(getCounter())     );
         System.out.println("PutChair constructor called");
         setFontSize(10);
+
     }
 
     public static void incrementCounter() {
@@ -39,14 +45,15 @@ public class PutChair extends TextAreaFigure {
         return get(TEXT);
     }
 
-    @Override
+
     public TextAreaFigure clone() {
         incrementCounter();
         System.out.println( furnitureType + " clone" + "Called");
-
         PutChair that = (PutChair) super.clone();
+
         that.setText(furnitureType + ":" + Integer.toString(getCounter()));
         that.bounds = (Rectangle2D.Double) this.bounds.clone();
+
         return that;
     }
 }

@@ -5,10 +5,10 @@
     <li ng-repeat="image in images">
         <div class="row">
             <div class="col-xs-12 col-sm-3">
-                <img src="http://localhost:8080/image/{{ $index }}?format=image" class="img-responsive">
+                <img src="http://localhost:8080/images/{{ $index }}?format=image" class="img-responsive">
             </div>
             <div class="col-xs-12 col-sm-3">
-                <a href="http://localhost:8080/image/{{ $index }}?format=image"> {{ image.name }} </a>
+                <a href="http://localhost:8080/images/{{ $index }}?format=image"> {{ image.name }} </a>
             </div>
     </li>
 </ul>
