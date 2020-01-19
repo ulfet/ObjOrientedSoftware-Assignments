@@ -66,9 +66,10 @@ The calculation of the occupied space/free space would also follow a similar set
 
 \subsubsection{Validate constraints}
 For the validation of constraints we would like to propose the \textbf{1:n Connection meta-pattern} with \textbf{Observer pattern}. Not only would we then be able to define constraints for various types of objects, but also provide a quick response to the changes made in the UI by the user. This is very important in the constraint validation. As we have various object types and various constraints that are relevant to them, the 1:n Connection seems a relatively obvious choice.
+The notify in the ConstraintHolder would then be responsible for keeping track of all elements, which are managed in terms of a specific type of constraints and notifying all relevant observers if a constraint violation has been detected. ConstraintHolder contains also a list of all constraints to help in the notify process.
 
 \subsubsection{Mass operations}
-%TODO: still no idea about mass operations - any ideas?
+We would like to propose the usage of event listeners in each of the objects. When the user would like to for example resize all chairs in the image, they would have to emit chair resize event, which would trigger all relevant chairs to update their sizing accordingly.
 
 
 \subsection{UML Diagrams}
@@ -76,3 +77,7 @@ For the validation of constraints we would like to propose the \textbf{1:n Conne
 \subsubsection{Area Calculations}
 
 \includegraphics[width=\textwidth]{../uml/area}
+
+\subsubsection{Constraint Validation}
+
+\includegraphics[width=\textwidth]{../uml/constraint.png}
