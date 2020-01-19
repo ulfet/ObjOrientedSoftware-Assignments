@@ -21,6 +21,7 @@ import org.jhotdraw.samples.draw.DrawView;
 import org.jhotdraw.util.ResourceBundleUtil;
 
 import actions.CreateInWallElement;
+import actions.UploadFileAction;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -77,14 +78,15 @@ public class FurnitureApplicationModelBetter extends DrawApplicationModel {
         ButtonFactory.addToolTo(tb, editor, new CreationTool(new PutRefrigerator()), "furnisher.put.refrigerator", labels);
     }
 
-    private void addIOButtonsTo(JToolBar tb, DrawingEditor editor, ExportFileAction exportFileAction) {
-        addDefaultIOButtonsTo(tb, editor, exportFileAction,
+    private void addIOButtonsTo(JToolBar tb, DrawingEditor editor, ExportFileAction exportFileAction, UploadFileAction uploadFileAction) {
+        addDefaultIOButtonsTo(tb, editor, exportFileAction, uploadFileAction,
                 ButtonFactory.createDrawingActions(editor),
                 ButtonFactory.createSelectionActions(editor));
     }
 
     private void addDefaultIOButtonsTo(JToolBar tb, final DrawingEditor editor,
                                        ExportFileAction exportFileAction,
+                                       UploadFileAction uploadFileAction,
                                        Collection<Action> drawingActions, Collection<Action> selectionActions) {
         ResourceBundleUtil labels = DrawLabels.getLabels();
 
@@ -94,7 +96,9 @@ public class FurnitureApplicationModelBetter extends DrawApplicationModel {
         ButtonFactory.addToolTo(tb, editor, new BackgroundImageTool(new ImageFigure()), "furnisher.io.background", labels);
 
         JButton t = tb.add(exportFileAction);
+        JButton tt = tb.add((Action)uploadFileAction);
         labels.configureToolBarButton(t, "furnisher.io.export");
+        labels.configureToolBarButton(tt, "furnisher.io.upload");
     }
 
     @Override
@@ -126,7 +130,8 @@ public class FurnitureApplicationModelBetter extends DrawApplicationModel {
 
         tb = new JToolBar();
         tb.setName("IO Operations - Furnisher");
-        addIOButtonsTo(tb, editor, new ExportFileAction(a, pr));
+        addIOButtonsTo(tb, editor, new ExportFileAction(a, pr), new UploadFileAction(a, pr));
+        
         list.add(tb);
 //
 //        tb = new JToolBar();
