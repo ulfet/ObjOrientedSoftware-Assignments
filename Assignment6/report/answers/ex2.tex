@@ -17,3 +17,6 @@ Other possible requests to the web service:
     \item GET \textit{/images/filter?filter=\{text\}}: All images which name matches \{text\}.
 \end{itemize}
 
+Within the OOSC-Architect, we decided to implement a new "UploadFileAction" extending "AbstractViewAction" which is invoked when the Upload Button in the Toolbar is clicked.
+It first uploads the current View as a PNG, retrieves the location header, then POSTs a json containing the needed meta-info and the location header of the PNG.
+Patterns used: constructors, callback (ActionPerformed) and inheritance.

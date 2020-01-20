@@ -68,11 +68,18 @@ public class UploadFileAction extends AbstractViewAction {
             }
 
             // TODO: Create image class and upload
-            String json = "";
-
-            url = new URL("http://localhost:8080/images/");
+            String json = "{\n" + 
+            		"  \"id\": \"42\",\n" + 
+            		"  \"name\": \"Philipp\",\n" + 
+            		"  \"location\": \""+ location + "\",\n" + 
+            		"  \"publishedAt\": \"2020-01-20\",\n" + 
+            		"  \"lastModified\": \"2020-01-20\"\n" + 
+            		"}";
+            
+            url = new URL("http://localhost:8080/images");
             connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
             connection.setDoOutput(true);
             connection.setUseCaches(false);
 

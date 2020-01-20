@@ -93,7 +93,7 @@ public class FurnitureApplicationModelBetter extends DrawApplicationModel {
         ButtonFactory.addToolTo(tb, editor, new BackgroundImageTool(new ImageFigure()), "furnisher.io.background", labels);
 
         JButton t = tb.add(exportFileAction);
-        JButton tt = tb.add((Action)uploadFileAction);
+        JButton tt = tb.add(uploadFileAction);
         labels.configureToolBarButton(t, "furnisher.io.export");
         labels.configureToolBarButton(tt, "furnisher.io.upload");
     }

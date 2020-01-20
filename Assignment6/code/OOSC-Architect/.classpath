@@ -39,5 +39,15 @@
 	<classpathentry kind="lib" path="jhotdraw/build/sources/org.jhotdraw7.samples.pert-src.jar"/>
 	<classpathentry kind="lib" path="jhotdraw/build/sources/org.jhotdraw7.samples.svg-src.jar"/>
 	<classpathentry kind="lib" path="jhotdraw/build/sources/org.jhotdraw7.samples.teddy-src.jar"/>
+	<classpathentry kind="lib" path="C:/Users/philh/.m2/repository/net/minidev/json-smart/2.3/json-smart-2.3.jar" sourcepath="C:/Users/philh/.m2/repository/net/minidev/json-smart/2.3/json-smart-2.3-sources.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="test" value="true"/>
+			<attribute name="maven.groupId" value="net.minidev"/>
+			<attribute name="maven.artifactId" value="json-smart"/>
+			<attribute name="maven.version" value="2.3"/>
+			<attribute name="maven.scope" value="test"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="jhotdraw/build/classes/de.rwth.swc.group10"/>
 </classpath>
