@@ -9,10 +9,7 @@ import org.jhotdraw.draw.io.ImageOutputFormat;
 import org.jhotdraw.samples.draw.DrawView;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
@@ -40,11 +37,14 @@ public class UploadFileAction extends AbstractViewAction {
 
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "image/png;charset=UTF-8");
             connection.setDoOutput( true );
             connection.setUseCaches( false );
 
+            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+
             // Does not work correctly
-            outputFormat.write(connection.getOutputStream(), drawing);
+            outputFormat.write(wr, drawing);
 
             // TODO: Just for debugging
             File file = new File("./temp.png");
@@ -79,11 +79,11 @@ public class UploadFileAction extends AbstractViewAction {
             url = new URL("http://localhost:8080/images");
             connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
             connection.setDoOutput(true);
             connection.setUseCaches(false);
 
-            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
             writer.write(json);
             writer.flush();
 
