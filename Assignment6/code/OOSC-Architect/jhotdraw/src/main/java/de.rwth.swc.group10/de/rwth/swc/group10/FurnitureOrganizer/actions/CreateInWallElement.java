@@ -1,4 +1,4 @@
-package actions;
+package de.rwth.swc.group10.FurnitureOrganizer.actions;
 
 import org.jhotdraw.draw.DrawLabels;
 import org.jhotdraw.draw.DrawingEditor;
